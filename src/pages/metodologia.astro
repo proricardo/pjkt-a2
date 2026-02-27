@@ -1,0 +1,545 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import Breadcrumb from '@/components/Breadcrumb.astro';
+import CTAStrip from '@/components/CTAStrip.astro';
+
+const breadcrumbs = [
+  { label: 'Início', href: '/' },
+  { label: 'Metodologia', href: '/metodologia' },
+];
+
+const stages = [
+  {
+    number: '01',
+    title: 'Discover',
+    subtitle: 'Imersão & Problema',
+    description: 'Antes de qualquer linha de código, entendemos profundamente o negócio, os usuários e o problema real a ser resolvido. Não começamos com soluções — começamos com perguntas.',
+    activities: [
+      'Imersão no negócio e contexto do cliente',
+      'Entrevistas com stakeholders e usuários',
+      'Mapeamento de jornadas e fluxos atuais',
+      'Análise de dados e métricas existentes',
+      'Benchmark e pesquisa de mercado',
+      'Workshop de definição do problema',
+    ],
+    artifacts: [
+      'Problem statement validado',
+      'Mapa de stakeholders',
+      'Research report com insights',
+      'Jobs to be done documentados',
+    ],
+    color: '#6D28D9',
+  },
+  {
+    number: '02',
+    title: 'Define',
+    subtitle: 'Arquitetura & Roadmap',
+    description: 'Com o problema claro, desenhamos a arquitetura da solução, priorizamos o backlog e estabelecemos estimativas realistas. Criamos o blueprint que guiará todo o desenvolvimento.',
+    activities: [
+      'Arquitetura de solução (técnica e de produto)',
+      'Definição de stack e decisões de tecnologia',
+      'Criação e priorização de backlog',
+      'Estimativas de esforço e cronograma',
+      'Identificação de riscos e mitigações',
+      'Alinhamento com stakeholders',
+    ],
+    artifacts: [
+      'Solution blueprint documentado',
+      'Roadmap de produto priorizado',
+      'Backlog inicial com épicos e histórias',
+      'Architecture Decision Records (ADRs)',
+    ],
+    color: '#0284C7',
+  },
+  {
+    number: '03',
+    title: 'Design',
+    subtitle: 'UX/UI & Prototipagem',
+    description: 'Transformamos o blueprint em experiência. Prototipamos, validamos com usuários reais e criamos um design system consistente antes de construir.',
+    activities: [
+      'Wireframes e fluxos de usuário',
+      'Prototipagem de alta fidelidade',
+      'Testes de usabilidade com usuários reais',
+      'Construção do design system',
+      'Especificação de componentes',
+      'Validação e iteração rápida',
+    ],
+    artifacts: [
+      'Protótipo navegável validado',
+      'Design system documentado',
+      'Especificação de componentes',
+      'Guia de acessibilidade',
+    ],
+    color: '#00E87A',
+  },
+  {
+    number: '04',
+    title: 'Build',
+    subtitle: 'Desenvolvimento Iterativo',
+    description: 'Desenvolvemos em sprints curtos com entregas incrementais, code review rigoroso e cobertura de testes desde o início. Visibilidade total para o cliente.',
+    activities: [
+      'Desenvolvimento em sprints de 1-2 semanas',
+      'Code review obrigatório para cada pull request',
+      'Testes automatizados (unit, integration, e2e)',
+      'CI/CD configurado desde o sprint 1',
+      'Demo e feedback a cada sprint',
+      'Documentação técnica contínua',
+    ],
+    artifacts: [
+      'Código versionado no repositório do cliente',
+      'Pipeline CI/CD configurado',
+      'Documentação técnica inline e externa',
+      'Relatórios de sprint com métricas de progresso',
+    ],
+    color: '#8B5CF6',
+  },
+  {
+    number: '05',
+    title: 'Deploy',
+    subtitle: 'Go-live & Handover',
+    description: 'O go-live é um evento planejado, não uma surpresa. Monitoramos, treinamos a equipe do cliente e fazemos handover completo com toda a documentação necessária.',
+    activities: [
+      'Go-live planejado com checklist completo',
+      'Monitoramento ativo no pós-lançamento',
+      'Treinamento da equipe interna do cliente',
+      'Handover técnico documentado',
+      'Definição de SLAs e escalação',
+      'Plano de rollback testado',
+    ],
+    artifacts: [
+      'Ambiente de produção configurado e monitorado',
+      'Runbook operacional',
+      'Plano de rollback documentado',
+      'Materiais de treinamento para a equipe',
+    ],
+    color: '#38BDF8',
+  },
+  {
+    number: '06',
+    title: 'Evolve',
+    subtitle: 'Métricas & Melhoria Contínua',
+    description: 'O projeto não termina no deploy. Medimos o impacto real, realizamos retrospectivas e planejamos as próximas iterações com base em dados, não em suposições.',
+    activities: [
+      'Coleta e análise de métricas de negócio',
+      'Retrospectiva de projeto com todas as partes',
+      'Planejamento das próximas iterações',
+      'Otimizações de performance',
+      'Evolução do produto baseada em dados',
+      'Atualização de roadmap com learnings',
+    ],
+    artifacts: [
+      'Relatório de KPIs vs. metas definidas',
+      'Backlog evoluído com novas prioridades',
+      'Plano de melhorias documentado',
+      'Documentação de aprendizados',
+    ],
+    color: '#6D28D9',
+  },
+];
+
+const faqs = [
+  {
+    q: 'Quanto tempo leva o ciclo completo do Projekt Loop?',
+    a: 'Depende da complexidade do projeto. Um MVP tipicamente passa por Discovery + Build em 8 a 12 semanas. Projetos maiores podem ter múltiplos loops completos. O importante é que cada etapa tem duração definida e entregáveis claros.',
+  },
+  {
+    q: 'Minha empresa precisa passar por todas as 6 etapas?',
+    a: 'Não necessariamente. Para clientes que já têm discovery realizado ou design definido, podemos entrar em etapas intermediárias. O Projekt Loop é adaptável — usamos as etapas relevantes para o contexto de cada cliente.',
+  },
+  {
+    q: 'Como o cliente acompanha o progresso durante o Build?',
+    a: 'Cada sprint termina com uma demo do que foi construído. O cliente tem acesso ao repositório, ao board de tarefas e ao ambiente de staging desde o início. Nada é surpresa no final.',
+  },
+  {
+    q: 'Qual a diferença entre o Projekt Loop e metodologias ágeis tradicionais?',
+    a: 'O Projekt Loop incorpora boas práticas ágeis mas vai além: inclui uma fase de Discovery estruturada (que muitos projetos ágeis pulam), Design integrado ao processo e uma fase explícita de Evolve com medição de impacto. É mais holístico.',
+  },
+  {
+    q: 'O que acontece se os requisitos mudarem durante o projeto?',
+    a: 'Mudanças são normais e esperadas. O processo iterativo com sprints curtos permite absorver mudanças sem catástrofe. Avaliamos impacto em esforço e cronograma de forma transparente, e o cliente decide como priorizar.',
+  },
+];
+---
+
+<Layout
+  title="Metodologia"
+  description="Projeto Loop — a metodologia proprietária da Projekt para discovery, design e delivery. 6 etapas de Discover a Evolve para resultados previsíveis e mensuráveis."
+>
+  <!-- Hero -->
+  <section style="background:var(--bg);padding:3rem 0 0;">
+    <div class="container" style="max-width:1280px;margin:0 auto;padding:0 1.5rem;">
+      <Breadcrumb items={breadcrumbs} />
+      <div style="max-width:720px;margin-top:2rem;padding-bottom:4rem;">
+        <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1rem;flex-wrap:wrap;">
+          <span class="section-label">Metodologia</span>
+          <span style="font-family:'JetBrains Mono',monospace;font-size:0.7rem;color:var(--accent-neon);background:rgba(var(--accent-neon-rgb),0.08);border:1px solid rgba(var(--accent-neon-rgb),0.25);border-radius:999px;padding:0.2rem 0.75rem;">// proprietary</span>
+        </div>
+        <h1 class="section-title gradient-text" style="font-size:clamp(2.5rem,6vw,4rem);">
+          Projekt Loop
+        </h1>
+        <p style="font-size:1.125rem;color:var(--text-muted);line-height:1.75;max-width:600px;">
+          Nossa metodologia proprietária de discovery, design e delivery. Seis etapas claras, cada uma com artefatos documentados e aceites formais.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Visual loop indicator -->
+  <div style="background:var(--bg);border-bottom:1px solid var(--border);overflow:hidden;">
+    <div class="container" style="max-width:1280px;margin:0 auto;padding:0 1.5rem;">
+      <div class="loop-indicator no-scrollbar">
+        {stages.map((s, i) => (
+          <div class="loop-stage">
+            <div class="loop-stage-dot" style={`border-color:${s.color};`}>
+              <span style={`color:${s.color};`} class="mono" style2="font-size:0.7rem;">{s.number}</span>
+            </div>
+            <span class="loop-stage-label">{s.title}</span>
+            {i < stages.length - 1 && (
+              <div class="loop-connector" aria-hidden="true">
+                <svg width="20" height="2" viewBox="0 0 20 2" aria-hidden="true">
+                  <line x1="0" y1="1" x2="20" y2="1" stroke="var(--border)" stroke-width="1.5" stroke-dasharray="4 2"/>
+                </svg>
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+
+  <!-- Stages timeline -->
+  <section style="background:var(--bg);padding:5rem 0;">
+    <div class="container" style="max-width:1280px;margin:0 auto;padding:0 1.5rem;">
+      <div class="stages-list">
+        {stages.map((stage, i) => (
+          <div class={`stage-item reveal ${i % 2 === 0 ? '' : 'stage-item--right'}`}>
+            <!-- Number column -->
+            <div class="stage-number-col">
+              <div class="stage-bubble" style={`border-color:${stage.color};`}>
+                <span class="mono" style={`color:${stage.color};font-size:0.8rem;font-weight:500;`}>{stage.number}</span>
+              </div>
+              {i < stages.length - 1 && (
+                <div class="stage-connector-vert" aria-hidden="true" style={`background:${stage.color};`}></div>
+              )}
+            </div>
+
+            <!-- Content card -->
+            <div class="stage-card" style={`border-left-color:${stage.color};`}>
+              <div class="stage-card-header">
+                <div>
+                  <span class="stage-subtitle">{stage.subtitle}</span>
+                  <h2 class="stage-title">{stage.title}</h2>
+                </div>
+              </div>
+
+              <p class="stage-description">{stage.description}</p>
+
+              <div class="stage-two-col">
+                <!-- Activities -->
+                <div>
+                  <h4 class="stage-col-title">Atividades</h4>
+                  <ul class="stage-list">
+                    {stage.activities.map(a => (
+                      <li class="stage-list-item">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style={`color:${stage.color};flex-shrink:0;`}>
+                          <polyline points="20 6 9 17 4 12"/>
+                        </svg>
+                        {a}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                <!-- Artifacts -->
+                <div>
+                  <h4 class="stage-col-title">Artefatos</h4>
+                  <ul class="stage-list">
+                    {stage.artifacts.map(a => (
+                      <li class="stage-list-item">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="color:var(--accent-2);flex-shrink:0;">
+                          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                          <polyline points="14 2 14 8 20 8"/>
+                        </svg>
+                        {a}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section style="background:var(--bg-alt);border-top:1px solid var(--border);padding:5rem 0;">
+    <div class="container" style="max-width:1280px;margin:0 auto;padding:0 1.5rem;">
+      <div style="max-width:780px;margin:0 auto;">
+        <span class="section-label">FAQ</span>
+        <h2 class="section-title" style="margin-bottom:3rem;">
+          Perguntas sobre a <span class="gradient-text">metodologia</span>
+        </h2>
+
+        <div class="faq-list">
+          {faqs.map((faq, i) => (
+            <details class={`faq-item reveal reveal-delay-${i+1}`}>
+              <summary class="faq-question">
+                {faq.q}
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="faq-icon">
+                  <polyline points="6 9 12 15 18 9"/>
+                </svg>
+              </summary>
+              <div class="faq-answer">
+                <p>{faq.a}</p>
+              </div>
+            </details>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <CTAStrip />
+</Layout>
+
+<style>
+  /* Loop indicator */
+  .loop-indicator {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    overflow-x: auto;
+    padding: 1.5rem 0;
+  }
+
+  .loop-stage {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-shrink: 0;
+  }
+
+  .loop-stage-dot {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 2px solid;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--surface);
+  }
+
+  .loop-stage-label {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.8125rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-right: 0.75rem;
+  }
+
+  .loop-connector {
+    margin: 0 0.5rem;
+  }
+
+  /* Stages */
+  .stages-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .stage-item {
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    gap: 2rem;
+    position: relative;
+  }
+
+  .stage-number-col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .stage-bubble {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    border: 2px solid;
+    background: var(--surface);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    z-index: 1;
+  }
+
+  .stage-connector-vert {
+    width: 2px;
+    flex: 1;
+    min-height: 40px;
+    opacity: 0.25;
+    margin: 8px 0;
+  }
+
+  .stage-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-left: 3px solid;
+    border-radius: var(--radius-lg);
+    padding: 2rem;
+    margin-bottom: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .stage-card-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .stage-subtitle {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 0.25rem;
+  }
+
+  .stage-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--text);
+    letter-spacing: -0.03em;
+    margin: 0;
+  }
+
+  .stage-description {
+    font-size: 0.9375rem;
+    color: var(--text-muted);
+    line-height: 1.75;
+    margin: 0;
+  }
+
+  .stage-two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+  }
+
+  .stage-col-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 0.75rem;
+    letter-spacing: -0.01em;
+  }
+
+  .stage-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .stage-list-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    line-height: 1.45;
+  }
+
+  /* FAQ */
+  .faq-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    border-top: 1px solid var(--border);
+  }
+
+  .faq-item {
+    border-bottom: 1px solid var(--border);
+  }
+
+  .faq-question {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1.25rem 0;
+    cursor: pointer;
+    font-family: 'Syne', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text);
+    list-style: none;
+    user-select: none;
+    transition: color 150ms ease;
+  }
+
+  .faq-question::-webkit-details-marker {
+    display: none;
+  }
+
+  .faq-question:hover {
+    color: var(--accent);
+  }
+
+  .faq-icon {
+    flex-shrink: 0;
+    color: var(--text-muted);
+    transition: transform 250ms ease;
+  }
+
+  .faq-item[open] .faq-icon {
+    transform: rotate(180deg);
+  }
+
+  .faq-item[open] .faq-question {
+    color: var(--accent);
+  }
+
+  .faq-answer {
+    padding-bottom: 1.25rem;
+  }
+
+  .faq-answer p {
+    font-size: 0.9375rem;
+    color: var(--text-muted);
+    line-height: 1.75;
+    margin: 0;
+  }
+
+  @media (max-width: 768px) {
+    .stage-item {
+      grid-template-columns: 1fr;
+    }
+
+    .stage-number-col {
+      flex-direction: row;
+    }
+
+    .stage-connector-vert {
+      display: none;
+    }
+
+    .stage-two-col {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+  }
+</style>

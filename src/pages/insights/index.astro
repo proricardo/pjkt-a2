@@ -1,0 +1,307 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import Breadcrumb from '@/components/Breadcrumb.astro';
+import { getCollection } from 'astro:content';
+
+const breadcrumbs = [
+  { label: 'Início', href: '/' },
+  { label: 'Insights', href: '/insights' },
+];
+
+const allPosts = await getCollection('insights');
+const posts = allPosts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+const categories = ['Todos', ...Array.from(new Set(posts.map(p => p.data.category)))];
+---
+
+<Layout
+  title="Insights"
+  description="Perspectivas da Projekt sobre Tecnologia, IA, Produto, Estratégia e Gestão. Artigos escritos por especialistas para quem toma decisões de tecnologia."
+>
+  <!-- Hero -->
+  <section style="background:var(--bg);padding:3rem 0 4rem;">
+    <div class="container" style="max-width:1280px;margin:0 auto;padding:0 1.5rem;">
+      <Breadcrumb items={breadcrumbs} />
+      <div style="max-width:640px;margin-top:2rem;">
+        <span class="section-label">Blog</span>
+        <h1 class="section-title gradient-text">Insights</h1>
+        <p class="section-subtitle">
+          Perspectivas sobre tecnologia, IA, produto e estratégia. Para quem toma decisões — e quer tomá-las melhor.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Category filter -->
+  <div style="background:var(--bg);border-bottom:1px solid var(--border);position:sticky;top:var(--header-height);z-index:20;">
+    <div class="container" style="max-width:1280px;margin:0 auto;padding:0 1.5rem;">
+      <div id="category-filters" class="category-filters no-scrollbar">
+        {categories.map(cat => (
+          <button
+            class={`category-btn ${cat === 'Todos' ? 'active' : ''}`}
+            data-category={cat}
+            type="button"
+          >
+            {cat}
+          </button>
+        ))}
+      </div>
+    </div>
+  </div>
+
+  <!-- Posts grid -->
+  <section style="background:var(--bg);padding:4rem 0 6rem;">
+    <div class="container" style="max-width:1280px;margin:0 auto;padding:0 1.5rem;">
+      {posts.length > 0 ? (
+        <div id="posts-grid" class="posts-grid">
+          {posts.map((post, i) => (
+            <article
+              class="post-card reveal"
+              data-category={post.data.category}
+            >
+              <div class="post-meta">
+                <span class="tag">{post.data.category}</span>
+                <time
+                  datetime={post.data.pubDate.toISOString()}
+                  class="post-date"
+                >
+                  {post.data.pubDate.toLocaleDateString('pt-BR', { day: '2-digit', month: 'short', year: 'numeric' })}
+                </time>
+              </div>
+
+              <h2 class="post-title">
+                <a href={`/insights/${post.slug}`} class="post-link">
+                  {post.data.title}
+                </a>
+              </h2>
+
+              <p class="post-excerpt">{post.data.description}</p>
+
+              <div class="post-footer">
+                <div class="post-author">
+                  <div class="author-dot" aria-hidden="true"></div>
+                  <span style="font-size:0.8125rem;color:var(--text-muted);">{post.data.author || 'Equipe Projekt'}</span>
+                </div>
+                <div class="post-meta-right">
+                  <span class="post-read-time">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+                    </svg>
+                    {post.data.readTime}
+                  </span>
+                  <a href={`/insights/${post.slug}`} class="read-link" aria-label={`Ler: ${post.data.title}`}>
+                    Ler →
+                  </a>
+                </div>
+              </div>
+            </article>
+          ))}
+        </div>
+      ) : (
+        <div style="text-align:center;padding:6rem 0;color:var(--text-muted);">
+          <p>Nenhum post encontrado. Novos insights em breve.</p>
+        </div>
+      )}
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .category-filters {
+    display: flex;
+    gap: 0.5rem;
+    overflow-x: auto;
+    padding: 0.875rem 0;
+  }
+
+  .category-btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.4rem 1rem;
+    background: var(--bg-alt);
+    border: 1.5px solid var(--border);
+    border-radius: 999px;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: all 150ms ease;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .category-btn:hover,
+  .category-btn.active {
+    background: rgba(var(--accent-rgb), 0.08);
+    border-color: rgba(var(--accent-rgb), 0.4);
+    color: var(--accent);
+  }
+
+  .posts-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+
+  .post-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-xl);
+    padding: 1.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.875rem;
+    transition: transform 250ms ease, box-shadow 250ms ease, border-color 250ms ease;
+  }
+
+  .post-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+    border-color: rgba(var(--accent-rgb), 0.25);
+  }
+
+  .post-card[hidden] {
+    display: none;
+  }
+
+  .post-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+
+  .post-date {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+  }
+
+  .post-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.0625rem;
+    font-weight: 700;
+    line-height: 1.35;
+    letter-spacing: -0.02em;
+    margin: 0;
+  }
+
+  .post-link {
+    color: var(--text);
+    text-decoration: none;
+    -webkit-text-fill-color: var(--text);
+    transition: color 150ms ease;
+  }
+
+  .post-link:hover {
+    color: var(--accent);
+    -webkit-text-fill-color: var(--accent);
+    opacity: 1;
+  }
+
+  .post-excerpt {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    line-height: 1.65;
+    margin: 0;
+    flex: 1;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .post-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 0.875rem;
+    border-top: 1px solid var(--border);
+    margin-top: auto;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+
+  .post-author {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .author-dot {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    flex-shrink: 0;
+  }
+
+  .post-meta-right {
+    display: flex;
+    align-items: center;
+    gap: 0.875rem;
+  }
+
+  .post-read-time {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+  }
+
+  .read-link {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--accent);
+    text-decoration: none;
+    -webkit-text-fill-color: var(--accent);
+    transition: opacity 150ms ease;
+  }
+
+  .read-link:hover {
+    opacity: 0.8;
+    -webkit-text-fill-color: var(--accent);
+  }
+
+  @media (max-width: 900px) {
+    .posts-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 560px) {
+    .posts-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
+<script is:inline>
+  (function() {
+    var filterBtns = document.querySelectorAll('.category-btn');
+    var postCards = document.querySelectorAll('.post-card');
+
+    filterBtns.forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        var category = btn.getAttribute('data-category');
+
+        // Update active state
+        filterBtns.forEach(function(b) { b.classList.remove('active'); });
+        btn.classList.add('active');
+
+        // Filter posts
+        postCards.forEach(function(card) {
+          var cardCategory = card.getAttribute('data-category');
+          if (category === 'Todos' || cardCategory === category) {
+            card.removeAttribute('hidden');
+          } else {
+            card.setAttribute('hidden', '');
+          }
+        });
+      });
+    });
+  })();
+</script>

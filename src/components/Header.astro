@@ -1,0 +1,361 @@
+---
+import ThemeToggle from './ThemeToggle.astro';
+
+const navLinks = [
+  { label: 'Início', href: '/' },
+  { label: 'Serviços', href: '/servicos' },
+  { label: 'Cases', href: '/cases' },
+  { label: 'Metodologia', href: '/metodologia' },
+  { label: 'Sobre', href: '/sobre' },
+  { label: 'Insights', href: '/insights' },
+];
+
+const currentPath = Astro.url.pathname;
+---
+
+<header id="site-header" role="banner">
+  <nav aria-label="Navegação principal" class="nav-inner">
+    <!-- Logo -->
+    <a href="/" class="logo-link" aria-label="Projekt — Página inicial">
+      <svg
+        width="32"
+        height="32"
+        viewBox="0 0 32 32"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+      >
+        <rect width="32" height="32" rx="8" fill="url(#logoGrad)" />
+        <path
+          d="M10 8h7.5C20.5 8 23 10.5 23 13.5S20.5 19 17.5 19H14v5h-4V8zm4 8h3c1.5 0 2.5-1 2.5-2.5S18.5 11 17 11h-3v5z"
+          fill="white"
+        />
+        <defs>
+          <linearGradient id="logoGrad" x1="0" y1="0" x2="32" y2="32" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stop-color="#6D28D9" />
+            <stop offset="100%" stop-color="#0284C7" />
+          </linearGradient>
+        </defs>
+      </svg>
+      <span class="logo-text">Projekt</span>
+    </a>
+
+    <!-- Desktop nav -->
+    <ul class="desktop-nav" role="list">
+      {navLinks.map((link) => (
+        <li>
+          <a
+            href={link.href}
+            class={`nav-link ${currentPath === link.href || (link.href !== '/' && currentPath.startsWith(link.href)) ? 'nav-link--active' : ''}`}
+          >
+            {link.label}
+          </a>
+        </li>
+      ))}
+    </ul>
+
+    <!-- Right actions -->
+    <div class="header-actions">
+      <ThemeToggle />
+      <a
+        href="/contato"
+        class="btn-primary"
+        style="padding:0.6rem 1.25rem;font-size:0.875rem;"
+      >
+        Fale Conosco
+      </a>
+
+      <!-- Hamburger -->
+      <button
+        id="hamburger"
+        class="hamburger"
+        aria-label="Abrir menu"
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+        type="button"
+      >
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile menu -->
+  <div
+    id="mobile-menu"
+    class="mobile-menu"
+    role="navigation"
+    aria-label="Menu mobile"
+    hidden
+  >
+    <ul role="list" style="list-style:none;display:flex;flex-direction:column;gap:0.25rem;">
+      {navLinks.map((link) => (
+        <li>
+          <a
+            href={link.href}
+            class={`mobile-nav-link ${currentPath === link.href ? 'mobile-nav-link--active' : ''}`}
+          >
+            {link.label}
+          </a>
+        </li>
+      ))}
+    </ul>
+
+    <div style="margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid var(--border);">
+      <a href="/contato" class="btn-primary" style="width:100%;justify-content:center;">
+        Fale Conosco
+      </a>
+    </div>
+
+    <div style="margin-top:1rem;display:flex;align-items:center;gap:0.5rem;">
+      <span style="font-size:0.875rem;color:var(--text-muted);">Tema:</span>
+      <ThemeToggle />
+    </div>
+  </div>
+</header>
+
+<style>
+  #site-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 50;
+    height: var(--header-height);
+    background: transparent;
+    transition: background 300ms ease, border-color 300ms ease, backdrop-filter 300ms ease;
+  }
+
+  #site-header.scrolled {
+    background: rgba(var(--bg-rgb, 249, 248, 245), 0.92);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  [data-theme="dark"] #site-header.scrolled {
+    background: rgba(9, 9, 11, 0.92);
+  }
+
+  .nav-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+  }
+
+  .logo-link {
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+    text-decoration: none;
+    flex-shrink: 0;
+  }
+
+  .logo-text {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 1.25rem;
+    color: var(--text);
+    letter-spacing: -0.03em;
+    -webkit-text-fill-color: var(--text);
+  }
+
+  .desktop-nav {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    flex: 1;
+  }
+
+  .nav-link {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.5rem 0.875rem;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    border-radius: 8px;
+    transition: all 150ms ease;
+    text-decoration: none;
+    -webkit-text-fill-color: var(--text-muted);
+  }
+
+  .nav-link:hover {
+    color: var(--text);
+    background: var(--bg-alt);
+    -webkit-text-fill-color: var(--text);
+    opacity: 1;
+  }
+
+  .nav-link--active {
+    color: var(--accent);
+    background: rgba(var(--accent-rgb), 0.08);
+    -webkit-text-fill-color: var(--accent);
+  }
+
+  .header-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-shrink: 0;
+    margin-left: auto;
+  }
+
+  /* Hamburger */
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 40px;
+    height: 40px;
+    padding: 11px 10px;
+    background: transparent;
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 150ms ease;
+  }
+
+  .hamburger:hover {
+    border-color: var(--accent);
+    background: rgba(var(--accent-rgb), 0.06);
+  }
+
+  .hamburger-line {
+    display: block;
+    width: 100%;
+    height: 1.5px;
+    background: var(--text);
+    border-radius: 2px;
+    transition: transform 200ms ease, opacity 200ms ease;
+  }
+
+  .hamburger[aria-expanded="true"] .hamburger-line:nth-child(1) {
+    transform: translateY(5.5px) rotate(45deg);
+  }
+
+  .hamburger[aria-expanded="true"] .hamburger-line:nth-child(2) {
+    opacity: 0;
+    transform: scaleX(0);
+  }
+
+  .hamburger[aria-expanded="true"] .hamburger-line:nth-child(3) {
+    transform: translateY(-5.5px) rotate(-45deg);
+  }
+
+  /* Mobile menu */
+  .mobile-menu {
+    position: fixed;
+    top: var(--header-height);
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--bg);
+    z-index: 40;
+    padding: 1.5rem;
+    overflow-y: auto;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .mobile-menu:not([hidden]) {
+    display: flex;
+  }
+
+  .mobile-nav-link {
+    display: block;
+    padding: 0.875rem 1rem;
+    font-family: 'Syne', sans-serif;
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    border-radius: 10px;
+    text-decoration: none;
+    -webkit-text-fill-color: var(--text-muted);
+    transition: all 150ms ease;
+  }
+
+  .mobile-nav-link:hover,
+  .mobile-nav-link--active {
+    color: var(--accent);
+    background: rgba(var(--accent-rgb), 0.08);
+    -webkit-text-fill-color: var(--accent);
+  }
+
+  @media (max-width: 900px) {
+    .desktop-nav {
+      display: none;
+    }
+
+    .hamburger {
+      display: flex;
+    }
+
+    .header-actions .btn-primary {
+      display: none;
+    }
+  }
+
+  @media (min-width: 901px) {
+    .mobile-menu {
+      display: none !important;
+    }
+  }
+</style>
+
+<!-- Space for fixed header -->
+<div style="height:var(--header-height);" aria-hidden="true"></div>
+
+<script is:inline>
+  (function() {
+    var header = document.getElementById('site-header');
+    var hamburger = document.getElementById('hamburger');
+    var mobileMenu = document.getElementById('mobile-menu');
+
+    // Scroll handler
+    function onScroll() {
+      if (window.scrollY > 20) {
+        header.classList.add('scrolled');
+      } else {
+        header.classList.remove('scrolled');
+      }
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+
+    // Mobile menu toggle
+    if (hamburger && mobileMenu) {
+      hamburger.addEventListener('click', function() {
+        var expanded = hamburger.getAttribute('aria-expanded') === 'true';
+        hamburger.setAttribute('aria-expanded', String(!expanded));
+        hamburger.setAttribute('aria-label', !expanded ? 'Fechar menu' : 'Abrir menu');
+        if (expanded) {
+          mobileMenu.setAttribute('hidden', '');
+        } else {
+          mobileMenu.removeAttribute('hidden');
+        }
+        document.body.style.overflow = expanded ? '' : 'hidden';
+      });
+
+      // Close on link click
+      mobileMenu.querySelectorAll('a').forEach(function(link) {
+        link.addEventListener('click', function() {
+          mobileMenu.setAttribute('hidden', '');
+          hamburger.setAttribute('aria-expanded', 'false');
+          hamburger.setAttribute('aria-label', 'Abrir menu');
+          document.body.style.overflow = '';
+        });
+      });
+    }
+  })();
+</script>

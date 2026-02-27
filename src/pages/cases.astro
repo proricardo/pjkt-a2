@@ -1,0 +1,324 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import Breadcrumb from '@/components/Breadcrumb.astro';
+import CTAStrip from '@/components/CTAStrip.astro';
+
+const breadcrumbs = [
+  { label: 'Início', href: '/' },
+  { label: 'Cases', href: '/cases' },
+];
+
+const featuredCases = [
+  {
+    id: 'case-1',
+    tag: 'Tecnologia',
+    label: '[EXEMPLO — substituir com case real]',
+    title: 'Plataforma B2B para Gestão de Contratos',
+    context: 'Uma empresa de médio porte com mais de 200 contratos ativos gerenciava tudo via planilhas e email, gerando retrabalho, inconsistências e risco jurídico.',
+    challenge: 'Criar uma plataforma centralizada que integrasse todos os stakeholders do ciclo de contrato — jurídico, comercial e financeiro — com rastreabilidade total e alertas automáticos.',
+    approach: 'Realizamos um discovery de 3 semanas com todas as áreas envolvidas. Desenhamos a arquitetura com foco em performance e escalabilidade. Desenvolvemos em sprints de 2 semanas com demonstrações frequentes para os stakeholders.',
+    result: 'Plataforma em produção com módulo de assinatura eletrônica integrado, dashboards em tempo real e notificações automáticas. Redução significativa no tempo de ciclo de aprovação de contratos.',
+    color1: '#6D28D9',
+    color2: '#0284C7',
+    stack: ['Next.js', 'Node.js', 'PostgreSQL', 'AWS'],
+  },
+  {
+    id: 'case-2',
+    tag: 'Inteligência Artificial',
+    label: '[EXEMPLO — substituir com case real]',
+    title: 'Agente de IA para Atendimento ao Cliente',
+    context: 'Uma empresa de SaaS com crescimento acelerado enfrentava volume de suporte crescente sem conseguir escalar a equipe na mesma proporção.',
+    challenge: 'Implementar um agente de IA capaz de resolver autonomamente as principais categorias de chamados sem comprometer a experiência do cliente.',
+    approach: 'Mapeamos as categorias de tickets mais frequentes e construímos uma base de conhecimento estruturada. Implementamos um sistema RAG com LLM especializado no domínio do produto. Criamos um fluxo de escalada inteligente para casos complexos.',
+    result: 'Agente em produção com elevada taxa de resolução autônoma. Satisfação de clientes mantida. Equipe de suporte redirecionada para casos de maior complexidade e valor.',
+    color1: '#0284C7',
+    color2: '#00E87A',
+    stack: ['Python', 'FastAPI', 'LangChain', 'OpenAI', 'Pinecone'],
+  },
+  {
+    id: 'case-3',
+    tag: 'Cloud & Arquitetura',
+    label: '[EXEMPLO — substituir com case real]',
+    title: 'Migração e Modernização de Arquitetura',
+    context: 'Plataforma monolítica em VPS próprio com dificuldade de escalar em picos de demanda e alto custo de manutenção de infraestrutura.',
+    challenge: 'Migrar para cloud sem downtime, modernizar a arquitetura para microsserviços e reduzir custos operacionais mantendo a confiabilidade.',
+    approach: 'Realizamos uma análise de domínio para identificar os bounded contexts. Migramos gradualmente usando o padrão Strangler Fig, serviço por serviço, com feature flags para rollback seguro. Implementamos observabilidade completa desde o início.',
+    result: 'Migração concluída sem downtime perceptível pelos usuários. Arquitetura cloud-native com autoscaling. Redução de custos de infraestrutura e aumento na velocidade de deploy.',
+    color1: '#8B5CF6',
+    color2: '#38BDF8',
+    stack: ['AWS ECS', 'Docker', 'Terraform', 'PostgreSQL', 'Redis'],
+  },
+];
+
+const briefCases = [
+  {
+    id: 'case-4',
+    tag: 'Data & Analytics',
+    label: '[EXEMPLO — substituir com case real]',
+    title: 'Sistema de Análise Preditiva de Churn',
+    snippet: 'Modelo de ML para identificar clientes com risco de cancelamento. Permite ação proativa da equipe de sucesso do cliente antes do cancelamento.',
+    color: '#6D28D9',
+  },
+  {
+    id: 'case-5',
+    tag: 'Produto Digital',
+    label: '[EXEMPLO — substituir com case real]',
+    title: 'Portal de Autoatendimento para RH',
+    snippet: 'Portal integrado ao sistema de folha de pagamento, permitindo colaboradores acessarem holerites, solicitarem férias e atualizar dados cadastrais sem intervenção do RH.',
+    color: '#0284C7',
+  },
+  {
+    id: 'case-6',
+    tag: 'Business Intelligence',
+    label: '[EXEMPLO — substituir com case real]',
+    title: 'Dashboard de BI para Operações',
+    snippet: 'Dashboard em tempo real integrando dados de múltiplas fontes para gestão operacional. Alertas automáticos e visão consolidada para tomada de decisão rápida.',
+    color: '#00E87A',
+  },
+];
+---
+
+<Layout
+  title="Cases"
+  description="Cases de Tecnologia e IA da Projekt. Exemplos de projetos entregues em gestão de contratos, agentes de IA, migração cloud, analytics e muito mais."
+>
+  <!-- Hero -->
+  <section class="page-hero" style="padding:3rem 0;background:var(--bg);">
+    <div class="container" style="max-width:1280px;margin:0 auto;padding:0 1.5rem;">
+      <Breadcrumb items={breadcrumbs} />
+      <div style="max-width:640px;margin-top:2rem;">
+        <span class="section-label">Portfólio</span>
+        <h1 class="section-title gradient-text">Cases</h1>
+        <p class="section-subtitle">
+          Exemplos do tipo de desafio que resolvemos e o impacto que geramos. Cases ilustrativos até substituição por clientes reais.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured cases -->
+  <section style="background:var(--bg);padding:0 0 5rem;">
+    <div class="container" style="max-width:1280px;margin:0 auto;padding:0 1.5rem;">
+      <div class="featured-cases">
+        {featuredCases.map((c, i) => (
+          <article
+            id={c.id}
+            class="featured-case reveal"
+            aria-label={c.title}
+            style={i % 2 === 1 ? 'direction:rtl;' : ''}
+          >
+            <!-- Thumbnail -->
+            <div class="case-visual" style="direction:ltr;">
+              <svg viewBox="0 0 560 320" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;">
+                <defs>
+                  <linearGradient id={`grad${c.id}`} x1="0" y1="0" x2="560" y2="320" gradientUnits="userSpaceOnUse">
+                    <stop offset="0%" stop-color={c.color1} stop-opacity="0.2"/>
+                    <stop offset="100%" stop-color={c.color2} stop-opacity="0.3"/>
+                  </linearGradient>
+                  <filter id={`fblur${c.id}`}><feGaussianBlur stdDeviation="30"/></filter>
+                </defs>
+                <rect width="560" height="320" fill="var(--bg-alt)"/>
+                <rect width="560" height="320" fill={`url(#grad${c.id})`}/>
+                <circle cx="140" cy="160" r="200" fill={c.color1} filter={`url(#fblur${c.id})`} opacity="0.15"/>
+                <circle cx="420" cy="160" r="180" fill={c.color2} filter={`url(#fblur${c.id})`} opacity="0.12"/>
+                <path d="M0 80 H560 M0 160 H560 M0 240 H560 M112 0 V320 M224 0 V320 M336 0 V320 M448 0 V320" stroke="white" stroke-width="0.5" opacity="0.04"/>
+                <text x="280" y="165" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="14" fill="white" opacity="0.3">{c.tag}</text>
+              </svg>
+            </div>
+
+            <!-- Content -->
+            <div class="case-content-full" style="direction:ltr;">
+              <div style="display:flex;align-items:center;gap:0.75rem;margin-bottom:1rem;flex-wrap:wrap;">
+                <span class="tag">{c.tag}</span>
+                <span style="font-family:'JetBrains Mono',monospace;font-size:0.7rem;color:var(--text-muted);font-style:italic;">{c.label}</span>
+              </div>
+
+              <h2 style="font-family:'Syne',sans-serif;font-size:clamp(1.5rem,3vw,2.25rem);font-weight:800;color:var(--text);letter-spacing:-0.03em;margin-bottom:1.5rem;line-height:1.2;">
+                {c.title}
+              </h2>
+
+              <div class="case-sections">
+                <div class="case-section">
+                  <span class="case-section-label">Contexto</span>
+                  <p class="case-section-text">{c.context}</p>
+                </div>
+                <div class="case-section">
+                  <span class="case-section-label">Desafio</span>
+                  <p class="case-section-text">{c.challenge}</p>
+                </div>
+                <div class="case-section">
+                  <span class="case-section-label">Abordagem</span>
+                  <p class="case-section-text">{c.approach}</p>
+                </div>
+                <div class="case-section case-section--result">
+                  <span class="case-section-label">Resultado</span>
+                  <p class="case-section-text">{c.result}</p>
+                </div>
+              </div>
+
+              <!-- Stack -->
+              <div style="margin-top:1.25rem;">
+                <span style="font-family:'JetBrains Mono',monospace;font-size:0.7rem;color:var(--text-muted);letter-spacing:0.06em;text-transform:uppercase;display:block;margin-bottom:0.625rem;">Stack utilizada</span>
+                <div style="display:flex;flex-wrap:wrap;gap:0.5rem;">
+                  {c.stack.map(s => (
+                    <span class="badge">{s}</span>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Brief cases -->
+  <section style="background:var(--bg-alt);border-top:1px solid var(--border);padding:5rem 0;">
+    <div class="container" style="max-width:1280px;margin:0 auto;padding:0 1.5rem;">
+      <h2 class="section-title" style="margin-bottom:2.5rem;">
+        Outros <span class="gradient-text">projetos</span>
+      </h2>
+      <div class="brief-grid">
+        {briefCases.map((c, i) => (
+          <article id={c.id} class={`brief-case reveal reveal-delay-${i+1}`}>
+            <div class="brief-accent" style={`background:${c.color};`}></div>
+            <div style="display:flex;align-items:center;gap:0.625rem;margin-bottom:0.875rem;flex-wrap:wrap;">
+              <span class="tag">{c.tag}</span>
+              <span style="font-family:'JetBrains Mono',monospace;font-size:0.65rem;color:var(--text-muted);font-style:italic;">{c.label}</span>
+            </div>
+            <h3 style="font-family:'Syne',sans-serif;font-size:1.125rem;font-weight:700;color:var(--text);letter-spacing:-0.02em;margin-bottom:0.75rem;line-height:1.3;">
+              {c.title}
+            </h3>
+            <p style="font-size:0.875rem;color:var(--text-muted);line-height:1.65;margin:0;">
+              {c.snippet}
+            </p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Disclaimer -->
+  <div style="background:var(--bg-alt);border-top:1px solid var(--border);padding:1.5rem 0;">
+    <div class="container" style="max-width:1280px;margin:0 auto;padding:0 1.5rem;">
+      <p style="font-size:0.8125rem;color:var(--text-muted);font-style:italic;text-align:center;">
+        Todos os cases acima são modelos ilustrativos do tipo de projeto que realizamos. [PREENCHER com cases reais do cliente após aprovação.]
+      </p>
+    </div>
+  </div>
+
+  <CTAStrip />
+</Layout>
+
+<style>
+  .featured-cases {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+    padding-top: 3rem;
+  }
+
+  .featured-case {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: center;
+    padding: 2.5rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+  }
+
+  .case-visual {
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    aspect-ratio: 16/9;
+  }
+
+  .case-content-full {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .case-sections {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .case-section {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .case-section-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--accent);
+  }
+
+  .case-section-text {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    line-height: 1.65;
+    margin: 0;
+  }
+
+  .case-section--result .case-section-text {
+    color: var(--text);
+    font-weight: 500;
+  }
+
+  .brief-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+
+  .brief-case {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 1.75rem;
+    position: relative;
+    overflow: hidden;
+    transition: transform 250ms ease, box-shadow 250ms ease;
+  }
+
+  .brief-case:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-md);
+  }
+
+  .brief-accent {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    opacity: 0.7;
+  }
+
+  @media (max-width: 900px) {
+    .featured-case {
+      grid-template-columns: 1fr;
+      direction: ltr !important;
+    }
+
+    .brief-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (min-width: 640px) and (max-width: 900px) {
+    .brief-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+</style>

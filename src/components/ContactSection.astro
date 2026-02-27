@@ -1,0 +1,519 @@
+---
+// ContactSection — two-column form + info
+// Formspree integration with mailto fallback
+
+const formspreeEndpoint = import.meta.env.PUBLIC_FORMSPREE_ENDPOINT;
+const hasFormspree = !!formspreeEndpoint;
+const formAction = hasFormspree ? formspreeEndpoint : 'mailto:contato@projekt.com.br';
+
+const services = [
+  'Projetos de Tecnologia',
+  'Projetos de IA',
+  'Assessoria de Tecnologia',
+  'Consultoria em Soluções',
+  'Outro / Não sei ainda',
+];
+---
+
+<section class="section contact-section" id="contato" aria-labelledby="contact-title">
+  <div class="container" style="max-width:1280px;margin:0 auto;padding:0 1.5rem;">
+    <div class="contact-grid">
+      <!-- Left: Form -->
+      <div class="contact-form-col reveal">
+        <span class="section-label">Contato</span>
+        <h2 id="contact-title" class="section-title" style="margin-bottom:0.75rem;">
+          Vamos <span class="gradient-text">conversar?</span>
+        </h2>
+        <p style="color:var(--text-muted);margin-bottom:2rem;font-size:0.9375rem;">
+          Preencha o formulário e retornaremos em até 24 horas úteis.
+        </p>
+
+        {!hasFormspree && (
+          <!-- Note: Configure PUBLIC_FORMSPREE_ENDPOINT env var to enable form submission -->
+          <div class="form-fallback-notice">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="12" cy="12" r="10"/>
+              <line x1="12" y1="8" x2="12" y2="12"/>
+              <line x1="12" y1="16" x2="12.01" y2="16"/>
+            </svg>
+            <p>
+              Formulário via email. <a href="mailto:contato@projekt.com.br">Clique para abrir seu email</a> ou configure o Formspree.
+            </p>
+          </div>
+        )}
+
+        <form
+          action={formAction}
+          method="POST"
+          class="contact-form"
+          id="contact-form"
+          novalidate
+          aria-label="Formulário de contato"
+        >
+          {hasFormspree && (
+            <>
+              <input type="hidden" name="_subject" value="Novo contato via Projekt.com.br" />
+              <input type="hidden" name="_language" value="pt" />
+            </>
+          )}
+
+          <!-- Honeypot (spam trap) -->
+          <input
+            type="text"
+            name="_gotcha"
+            style="display:none !important;"
+            aria-hidden="true"
+            tabindex="-1"
+            autocomplete="off"
+          />
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="contact-name" class="form-label">Nome <span aria-hidden="true">*</span></label>
+              <input
+                type="text"
+                id="contact-name"
+                name="name"
+                class="form-input"
+                placeholder="Seu nome completo"
+                required
+                autocomplete="name"
+                aria-required="true"
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="contact-email" class="form-label">Email <span aria-hidden="true">*</span></label>
+              <input
+                type="email"
+                id="contact-email"
+                name="email"
+                class="form-input"
+                placeholder="seu@email.com"
+                required
+                autocomplete="email"
+                aria-required="true"
+              />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="contact-company" class="form-label">Empresa</label>
+            <input
+              type="text"
+              id="contact-company"
+              name="company"
+              class="form-input"
+              placeholder="Nome da sua empresa"
+              autocomplete="organization"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="contact-service" class="form-label">Serviço de interesse</label>
+            <select
+              id="contact-service"
+              name="service"
+              class="form-input"
+              aria-label="Selecione o serviço de interesse"
+            >
+              <option value="" disabled selected>Selecione uma opção</option>
+              {services.map(s => (
+                <option value={s}>{s}</option>
+              ))}
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="contact-message" class="form-label">Mensagem <span aria-hidden="true">*</span></label>
+            <textarea
+              id="contact-message"
+              name="message"
+              class="form-input"
+              rows="5"
+              placeholder="Descreva seu projeto, desafio ou dúvida..."
+              required
+              aria-required="true"
+              style="resize:vertical;min-height:120px;"
+            ></textarea>
+          </div>
+
+          <button type="submit" class="btn-primary" style="width:100%;justify-content:center;padding:0.875rem;" id="contact-submit">
+            Enviar mensagem
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <line x1="22" y1="2" x2="11" y2="13"/>
+              <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+            </svg>
+          </button>
+
+          <div id="form-success" class="form-message form-success" role="alert" aria-live="polite" hidden>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <polyline points="20 6 9 17 4 12"/>
+            </svg>
+            Mensagem enviada com sucesso! Retornaremos em breve.
+          </div>
+
+          <div id="form-error" class="form-message form-error" role="alert" aria-live="polite" hidden>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="12" cy="12" r="10"/>
+              <line x1="12" y1="8" x2="12" y2="12"/>
+              <line x1="12" y1="16" x2="12.01" y2="16"/>
+            </svg>
+            Ops! Erro ao enviar. Tente pelo email: <a href="mailto:contato@projekt.com.br">contato@projekt.com.br</a>
+          </div>
+        </form>
+      </div>
+
+      <!-- Right: Info -->
+      <div class="contact-info-col reveal reveal-delay-2">
+        <!-- Info card -->
+        <div class="contact-info-card">
+          <h3 class="info-title">Outras formas de contato</h3>
+
+          <div class="info-items">
+            <div class="info-item">
+              <div class="info-icon" aria-hidden="true">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                  <polyline points="22,6 12,13 2,6"/>
+                </svg>
+              </div>
+              <div>
+                <span class="info-label">Email</span>
+                <a href="mailto:contato@projekt.com.br" class="info-value">
+                  contato@projekt.com.br
+                </a>
+              </div>
+            </div>
+
+            <div class="info-item">
+              <div class="info-icon" aria-hidden="true">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/>
+                </svg>
+              </div>
+              <div>
+                <span class="info-label">WhatsApp</span>
+                <a href="https://wa.me/5541999999999" target="_blank" rel="noopener noreferrer" class="info-value">
+                  [PREENCHER: número]
+                </a>
+              </div>
+            </div>
+
+            <div class="info-item">
+              <div class="info-icon" aria-hidden="true">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                  <circle cx="12" cy="10" r="3"/>
+                </svg>
+              </div>
+              <div>
+                <span class="info-label">Localização</span>
+                <span class="info-value" style="-webkit-text-fill-color:var(--text-muted);color:var(--text-muted);">
+                  Curitiba/PR &mdash; Atendimento remoto Brasil
+                </span>
+              </div>
+            </div>
+
+            <div class="info-item">
+              <div class="info-icon" aria-hidden="true">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10"/>
+                  <polyline points="12 6 12 12 16 14"/>
+                </svg>
+              </div>
+              <div>
+                <span class="info-label">Tempo de resposta</span>
+                <span class="info-value" style="-webkit-text-fill-color:var(--text-muted);color:var(--text-muted);">
+                  Até 24 horas úteis
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <!-- WhatsApp CTA -->
+          <a
+            href="https://wa.me/5541999999999?text=Ol%C3%A1!%20Gostaria%20de%20conversar%20sobre%20um%20projeto."
+            target="_blank"
+            rel="noopener noreferrer"
+            class="whatsapp-cta"
+            aria-label="Falar via WhatsApp"
+          >
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/>
+            </svg>
+            Falar no WhatsApp agora
+          </a>
+        </div>
+
+        <!-- LinkedIn card -->
+        <div class="linkedin-card">
+          <div style="display:flex;align-items:center;gap:0.75rem;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="color:var(--accent-2);">
+              <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+            </svg>
+            <span style="font-family:'Syne',sans-serif;font-weight:700;color:var(--text);font-size:0.9375rem;">LinkedIn</span>
+          </div>
+          <p style="font-size:0.875rem;color:var(--text-muted);margin:0;">
+            Acompanhe nossos updates e publicações sobre tecnologia e IA.
+          </p>
+          <a
+            href="https://linkedin.com/company/projekt-br"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn-ghost"
+            style="align-self:flex-start;padding:0.4rem 0.875rem;"
+            aria-label="Seguir Projekt no LinkedIn"
+          >
+            Seguir →
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .contact-section {
+    background: var(--bg);
+  }
+
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 4rem;
+    align-items: start;
+  }
+
+  /* Form */
+  .form-fallback-notice {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.625rem;
+    padding: 0.875rem 1rem;
+    background: rgba(var(--accent-2-rgb), 0.08);
+    border: 1px solid rgba(var(--accent-2-rgb), 0.25);
+    border-radius: var(--radius-md);
+    margin-bottom: 1.5rem;
+  }
+
+  .form-fallback-notice svg {
+    color: var(--accent-2);
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .form-fallback-notice p {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    margin: 0;
+  }
+
+  .contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+
+  .form-message {
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+    padding: 0.875rem 1rem;
+    border-radius: var(--radius-md);
+    font-size: 0.875rem;
+    margin-top: 0.75rem;
+  }
+
+  .form-success {
+    background: rgba(var(--accent-neon-rgb), 0.1);
+    border: 1px solid rgba(var(--accent-neon-rgb), 0.3);
+    color: #16a34a;
+  }
+
+  .form-error {
+    background: rgba(239, 68, 68, 0.08);
+    border: 1px solid rgba(239, 68, 68, 0.25);
+    color: #dc2626;
+  }
+
+  /* Info column */
+  .contact-info-col {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    position: sticky;
+    top: calc(var(--header-height) + 2rem);
+  }
+
+  .contact-info-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-xl);
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .info-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.0625rem;
+    font-weight: 700;
+    color: var(--text);
+    margin: 0;
+  }
+
+  .info-items {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .info-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.875rem;
+  }
+
+  .info-icon {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(var(--accent-rgb), 0.08);
+    border: 1px solid rgba(var(--accent-rgb), 0.2);
+    border-radius: 10px;
+    color: var(--accent);
+    flex-shrink: 0;
+  }
+
+  .info-label {
+    display: block;
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 0.2rem;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  .info-value {
+    font-size: 0.9rem;
+    color: var(--text);
+    text-decoration: none;
+    -webkit-text-fill-color: var(--text);
+    font-weight: 500;
+    transition: color 150ms ease;
+    display: block;
+  }
+
+  a.info-value:hover {
+    color: var(--accent);
+    -webkit-text-fill-color: var(--accent);
+    opacity: 1;
+  }
+
+  .whatsapp-cta {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.625rem;
+    padding: 0.75rem;
+    background: #25D366;
+    color: white;
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-decoration: none;
+    -webkit-text-fill-color: white;
+    transition: opacity 200ms ease, transform 200ms ease;
+  }
+
+  .whatsapp-cta:hover {
+    opacity: 0.9;
+    transform: translateY(-2px);
+    -webkit-text-fill-color: white;
+  }
+
+  .linkedin-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.875rem;
+  }
+
+  @media (max-width: 900px) {
+    .contact-grid {
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
+    }
+
+    .contact-info-col {
+      position: static;
+    }
+
+    .form-row {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
+<script is:inline>
+  (function() {
+    var form = document.getElementById('contact-form');
+    var submitBtn = document.getElementById('contact-submit');
+    var successMsg = document.getElementById('form-success');
+    var errorMsg = document.getElementById('form-error');
+
+    if (!form) return;
+
+    var action = form.getAttribute('action') || '';
+    var isFormspree = action.includes('formspree.io');
+    if (!isFormspree) return; // Let native mailto handle it
+
+    form.addEventListener('submit', async function(e) {
+      e.preventDefault();
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Enviando...';
+      }
+
+      try {
+        var formData = new FormData(form);
+        var response = await fetch(action, {
+          method: 'POST',
+          body: formData,
+          headers: { 'Accept': 'application/json' },
+        });
+
+        if (response.ok) {
+          form.reset();
+          if (successMsg) successMsg.removeAttribute('hidden');
+          if (errorMsg) errorMsg.setAttribute('hidden', '');
+        } else {
+          throw new Error('Server error');
+        }
+      } catch (err) {
+        if (errorMsg) errorMsg.removeAttribute('hidden');
+        if (successMsg) successMsg.setAttribute('hidden', '');
+      } finally {
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = 'Enviar mensagem <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>';
+        }
+      }
+    });
+  })();
+</script>

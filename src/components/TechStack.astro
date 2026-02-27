@@ -1,0 +1,188 @@
+---
+// TechStack — "Stack & Competências" — grouped badge grid
+const categories = [
+  {
+    name: 'Frontend',
+    icon: '⬡',
+    items: ['React', 'Next.js', 'Astro', 'TypeScript', 'Tailwind CSS', 'Vue.js'],
+  },
+  {
+    name: 'Backend',
+    icon: '⬡',
+    items: ['Node.js', 'Python', 'FastAPI', 'Go', 'GraphQL', 'REST APIs'],
+  },
+  {
+    name: 'IA / ML',
+    icon: '⬡',
+    items: ['OpenAI API', 'LangChain', 'Hugging Face', 'PyTorch', 'LangGraph', 'RAG Systems'],
+  },
+  {
+    name: 'Cloud & Infra',
+    icon: '⬡',
+    items: ['AWS', 'GCP', 'Docker', 'Kubernetes', 'Terraform', 'GitHub Actions'],
+  },
+  {
+    name: 'Dados',
+    icon: '⬡',
+    items: ['PostgreSQL', 'MongoDB', 'Redis', 'Vector DBs', 'Kafka', 'dbt'],
+  },
+];
+---
+
+<section class="section tech-section" aria-labelledby="tech-title">
+  <div class="container" style="max-width:1280px;margin:0 auto;padding:0 1.5rem;">
+    <!-- Header -->
+    <div class="tech-header reveal">
+      <span class="section-label">Competências</span>
+      <h2 id="tech-title" class="section-title">
+        Stack &amp; <span class="gradient-text">Competências</span>
+      </h2>
+      <p class="section-subtitle">
+        Escolhemos a tecnologia certa para cada problema — não seguimos tendências, seguimos evidências.
+      </p>
+    </div>
+
+    <!-- Tech grid -->
+    <div class="tech-grid">
+      {categories.map((cat, i) => (
+        <div class={`tech-category reveal reveal-delay-${i + 1}`}>
+          <div class="category-header">
+            <div class="category-dot" aria-hidden="true"></div>
+            <h3 class="category-name">{cat.name}</h3>
+          </div>
+          <div class="tech-pills">
+            {cat.items.map(item => (
+              <span class="tech-pill">{item}</span>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <!-- Bottom note -->
+    <div class="tech-note reveal">
+      <div class="tech-note-inner">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="color:var(--accent);flex-shrink:0;">
+          <circle cx="12" cy="12" r="10"/>
+          <line x1="12" y1="8" x2="12" y2="12"/>
+          <line x1="12" y1="16" x2="12.01" y2="16"/>
+        </svg>
+        <p style="font-size:0.875rem;color:var(--text-muted);margin:0;">
+          Nossa stack evolui conforme as melhores ferramentas disponíveis. Priorizamos estabilidade, performance e custo total de propriedade.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .tech-section {
+    background: var(--bg);
+  }
+
+  .tech-header {
+    max-width: 640px;
+    margin-bottom: 3.5rem;
+  }
+
+  .tech-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .tech-category {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    transition: border-color 250ms ease, box-shadow 250ms ease;
+  }
+
+  .tech-category:hover {
+    border-color: rgba(var(--accent-rgb), 0.3);
+    box-shadow: var(--shadow-md);
+  }
+
+  .category-header {
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+  }
+
+  .category-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--accent);
+    flex-shrink: 0;
+    animation: pulse-glow 3s ease-in-out infinite;
+  }
+
+  .category-name {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.9375rem;
+    font-weight: 700;
+    color: var(--text);
+    letter-spacing: -0.01em;
+    margin: 0;
+  }
+
+  .tech-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .tech-pill {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.3rem 0.75rem;
+    background: var(--bg-alt);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    transition: all 200ms ease;
+    cursor: default;
+  }
+
+  .tech-pill:hover {
+    background: rgba(var(--accent-rgb), 0.08);
+    border-color: rgba(var(--accent-rgb), 0.3);
+    color: var(--accent);
+    box-shadow: 0 0 12px rgba(var(--accent-rgb), 0.2);
+  }
+
+  .tech-note {
+    margin-top: 1rem;
+  }
+
+  .tech-note-inner {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    padding: 1rem 1.25rem;
+    background: var(--bg-alt);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+  }
+
+  @media (max-width: 900px) {
+    .tech-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 560px) {
+    .tech-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

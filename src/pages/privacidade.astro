@@ -1,0 +1,151 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import Breadcrumb from '@/components/Breadcrumb.astro';
+
+const breadcrumbs = [
+  { label: 'Início', href: '/' },
+  { label: 'Privacidade', href: '/privacidade' },
+];
+
+const lastUpdated = '27 de fevereiro de 2025';
+---
+
+<Layout
+  title="Política de Privacidade"
+  description="Política de Privacidade da Projekt — como coletamos, usamos e protegemos seus dados pessoais, em conformidade com a LGPD."
+>
+  <section style="background:var(--bg);padding:3rem 0 5rem;">
+    <div class="container" style="max-width:1280px;margin:0 auto;padding:0 1.5rem;">
+      <Breadcrumb items={breadcrumbs} />
+
+      <div class="policy-header" style="max-width:720px;margin:2rem 0 3rem;">
+        <span class="section-label">Legal</span>
+        <h1 class="section-title">Política de Privacidade</h1>
+        <p style="color:var(--text-muted);font-size:0.9rem;margin-top:0.5rem;">
+          Última atualização: {lastUpdated}
+        </p>
+      </div>
+
+      <div class="prose" style="max-width:780px;">
+
+        <h2>1. Quem somos</h2>
+        <p>
+          A <strong>Projekt</strong> é uma consultoria de Tecnologia e Inteligência Artificial sediada em Curitiba, Paraná, Brasil. Operamos o website <strong>projekt.com.br</strong> e os serviços relacionados.
+        </p>
+        <p>
+          Para fins desta Política de Privacidade, atuamos como <strong>controlador de dados</strong> nos termos da Lei Geral de Proteção de Dados Pessoais (LGPD — Lei nº 13.709/2018).
+        </p>
+        <p>
+          Contato para assuntos de privacidade: <a href="mailto:contato@projekt.com.br">contato@projekt.com.br</a>
+        </p>
+
+        <h2>2. Dados que coletamos</h2>
+        <p>Coletamos as seguintes categorias de dados pessoais:</p>
+
+        <h3>2.1 Dados fornecidos diretamente por você</h3>
+        <ul>
+          <li><strong>Formulário de contato:</strong> nome, endereço de email, nome da empresa e mensagem.</li>
+          <li><strong>Comunicações:</strong> mensagens enviadas por email ou WhatsApp.</li>
+        </ul>
+
+        <h3>2.2 Dados coletados automaticamente</h3>
+        <ul>
+          <li><strong>Dados de navegação:</strong> endereço IP (anonimizado), tipo de navegador, sistema operacional, páginas visitadas, tempo de permanência — apenas se você aceitar cookies analíticos.</li>
+          <li><strong>Cookies:</strong> conforme descrito em nossa <a href="/cookies">Política de Cookies</a>.</li>
+        </ul>
+
+        <h2>3. Como usamos seus dados</h2>
+        <p>Utilizamos seus dados pessoais para as seguintes finalidades:</p>
+        <ul>
+          <li><strong>Responder solicitações de contato</strong> e fornecer informações sobre nossos serviços.</li>
+          <li><strong>Executar contratos</strong> de prestação de serviços quando aplicável.</li>
+          <li><strong>Melhorar nosso website</strong> por meio de análise de uso agregada e anonimizada.</li>
+          <li><strong>Cumprir obrigações legais</strong> e regulatórias aplicáveis.</li>
+          <li><strong>Proteger interesses legítimos</strong>, incluindo segurança e prevenção de fraudes.</li>
+        </ul>
+
+        <h2>4. Base legal para o tratamento</h2>
+        <p>O tratamento de seus dados pessoais é baseado nas seguintes hipóteses legais previstas na LGPD:</p>
+        <ul>
+          <li><strong>Consentimento</strong> (art. 7º, I): para cookies não essenciais e comunicações de marketing, quando explicitamente aceito.</li>
+          <li><strong>Execução de contrato</strong> (art. 7º, V): quando necessário para prestação dos serviços contratados.</li>
+          <li><strong>Cumprimento de obrigação legal</strong> (art. 7º, II): quando exigido por legislação aplicável.</li>
+          <li><strong>Legítimo interesse</strong> (art. 7º, IX): para responder consultas, melhorar serviços e garantir segurança do site.</li>
+        </ul>
+
+        <h2>5. Compartilhamento de dados</h2>
+        <p>
+          Não vendemos, alugamos ou compartilhamos seus dados pessoais com terceiros para fins comerciais. Podemos compartilhar dados com:
+        </p>
+        <ul>
+          <li><strong>Processadores de serviço:</strong> ferramentas de formulário (Formspree) e análise (Google Analytics, quando consentido), operando sob nossos contratos e políticas de privacidade próprias.</li>
+          <li><strong>Autoridades públicas:</strong> quando exigido por lei, ordem judicial ou regulação aplicável.</li>
+        </ul>
+
+        <h2>6. Armazenamento e retenção</h2>
+        <p>
+          Armazenamos seus dados pelo período necessário para cumprir as finalidades descritas nesta Política, respeitando os prazos legais obrigatórios. Dados de contato são mantidos por até <strong>5 anos</strong> após o encerramento da relação comercial para fins de obrigações legais.
+        </p>
+        <p>
+          Dados coletados por cookies analíticos são retidos conforme a política de cada ferramenta (até 26 meses para Google Analytics, quando consentido).
+        </p>
+
+        <h2>7. Seus direitos como titular de dados</h2>
+        <p>Nos termos da LGPD, você possui os seguintes direitos em relação aos seus dados pessoais:</p>
+        <ul>
+          <li><strong>Confirmação e acesso:</strong> confirmar se tratamos seus dados e obter cópia deles.</li>
+          <li><strong>Correção:</strong> solicitar a correção de dados incompletos, inexatos ou desatualizados.</li>
+          <li><strong>Anonimização, bloqueio ou eliminação:</strong> de dados desnecessários, excessivos ou tratados em desconformidade com a LGPD.</li>
+          <li><strong>Portabilidade:</strong> receber seus dados em formato estruturado e interoperável.</li>
+          <li><strong>Eliminação:</strong> solicitar a exclusão de dados tratados com base em consentimento.</li>
+          <li><strong>Informação sobre compartilhamento:</strong> saber com quais entidades compartilhamos seus dados.</li>
+          <li><strong>Revogação do consentimento:</strong> a qualquer momento, sem custo.</li>
+          <li><strong>Oposição:</strong> ao tratamento baseado em legítimo interesse.</li>
+          <li><strong>Revisão de decisões automatizadas.</strong></li>
+        </ul>
+        <p>
+          Para exercer qualquer direito, entre em contato pelo email: <a href="mailto:contato@projekt.com.br">contato@projekt.com.br</a>. Responderemos em até <strong>15 dias úteis</strong>.
+        </p>
+
+        <h2>8. Segurança dos dados</h2>
+        <p>
+          Adotamos medidas técnicas e organizacionais adequadas para proteger seus dados pessoais contra acesso não autorizado, alteração, divulgação ou destruição, incluindo:
+        </p>
+        <ul>
+          <li>Transmissão via HTTPS com certificado SSL/TLS.</li>
+          <li>Acesso restrito a dados pessoais por necessidade operacional.</li>
+          <li>Uso de serviços de terceiros com políticas de segurança reconhecidas.</li>
+        </ul>
+
+        <h2>9. Cookies</h2>
+        <p>
+          Utilizamos cookies para melhorar sua experiência de navegação. Consulte nossa <a href="/cookies">Política de Cookies</a> para informações detalhadas sobre os tipos de cookies usados e como gerenciá-los.
+        </p>
+
+        <h2>10. Links externos</h2>
+        <p>
+          Nosso website pode conter links para sites de terceiros. Não somos responsáveis pelas práticas de privacidade desses sites. Recomendamos que você leia as políticas de privacidade de qualquer site que visitar.
+        </p>
+
+        <h2>11. Alterações nesta Política</h2>
+        <p>
+          Podemos atualizar esta Política de Privacidade periodicamente. Alterações significativas serão notificadas de forma proeminente em nosso website. O uso continuado do site após as alterações constitui aceitação da Política atualizada.
+        </p>
+
+        <h2>12. Contato e reclamações</h2>
+        <p>
+          Para dúvidas, solicitações ou reclamações relacionadas a privacidade, entre em contato com:
+        </p>
+        <p>
+          <strong>Projekt</strong><br />
+          Email: <a href="mailto:contato@projekt.com.br">contato@projekt.com.br</a><br />
+          Curitiba, PR — Brasil
+        </p>
+        <p>
+          Se você acredita que seus direitos não foram atendidos, você também pode apresentar reclamação à <strong>Autoridade Nacional de Proteção de Dados (ANPD)</strong>: <a href="https://www.gov.br/anpd" target="_blank" rel="noopener noreferrer">www.gov.br/anpd</a>.
+        </p>
+
+      </div>
+    </div>
+  </section>
+</Layout>

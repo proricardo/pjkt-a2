@@ -1,0 +1,238 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import Breadcrumb from '@/components/Breadcrumb.astro';
+
+const breadcrumbs = [
+  { label: 'Início', href: '/' },
+  { label: 'Cookies', href: '/cookies' },
+];
+
+const lastUpdated = '27 de fevereiro de 2025';
+
+const cookieTypes = [
+  {
+    name: 'Cookies Essenciais',
+    description: 'Necessários para o funcionamento básico do site. Não podem ser desabilitados.',
+    required: true,
+    examples: [
+      { name: 'projekt-theme', purpose: 'Armazena a preferência de tema claro/escuro', duration: 'Persistente (localStorage)' },
+      { name: 'projekt-cookie-consent', purpose: 'Registra sua escolha de consentimento de cookies', duration: 'Persistente (localStorage)' },
+    ],
+  },
+  {
+    name: 'Cookies Analíticos',
+    description: 'Nos ajudam a entender como os visitantes interagem com o site. Requerem seu consentimento.',
+    required: false,
+    examples: [
+      { name: '_ga, _ga_*', purpose: 'Google Analytics — análise de tráfego e comportamento (IP anonimizado)', duration: 'Até 26 meses' },
+    ],
+  },
+];
+---
+
+<Layout
+  title="Política de Cookies"
+  description="Política de Cookies da Projekt — tipos de cookies utilizados, finalidade e como gerenciá-los no seu navegador."
+>
+  <section style="background:var(--bg);padding:3rem 0 5rem;">
+    <div class="container" style="max-width:1280px;margin:0 auto;padding:0 1.5rem;">
+      <Breadcrumb items={breadcrumbs} />
+
+      <div style="max-width:720px;margin:2rem 0 3rem;">
+        <span class="section-label">Legal</span>
+        <h1 class="section-title">Política de Cookies</h1>
+        <p style="color:var(--text-muted);font-size:0.9rem;margin-top:0.5rem;">
+          Última atualização: {lastUpdated}
+        </p>
+      </div>
+
+      <div class="prose" style="max-width:780px;">
+
+        <h2>O que são cookies?</h2>
+        <p>
+          Cookies são pequenos arquivos de texto ou dados armazenados no seu dispositivo (navegador) quando você visita um website. Eles permitem que o site lembre suas preferências e melhore sua experiência de navegação.
+        </p>
+        <p>
+          No caso da Projekt, também utilizamos o <strong>localStorage</strong> do navegador para armazenar preferências como o tema (claro/escuro) e consentimento de cookies — essas informações ficam no seu dispositivo e não são enviadas para nossos servidores.
+        </p>
+
+        <h2>Tipos de cookies que usamos</h2>
+
+        {cookieTypes.map(ct => (
+          <div class="cookie-type-block">
+            <div class="cookie-type-header">
+              <h3>{ct.name}</h3>
+              {ct.required ? (
+                <span class="badge badge-accent">Essencial</span>
+              ) : (
+                <span class="badge">Opcional</span>
+              )}
+            </div>
+            <p>{ct.description}</p>
+
+            <div class="cookie-table-wrapper">
+              <table class="cookie-table">
+                <thead>
+                  <tr>
+                    <th>Nome</th>
+                    <th>Finalidade</th>
+                    <th>Duração</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {ct.examples.map(ex => (
+                    <tr>
+                      <td><code>{ex.name}</code></td>
+                      <td>{ex.purpose}</td>
+                      <td>{ex.duration}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        ))}
+
+        <h2>Como gerenciar cookies</h2>
+        <p>
+          Você pode controlar e gerenciar cookies de várias formas:
+        </p>
+
+        <h3>Banner de consentimento</h3>
+        <p>
+          Ao acessar o site pela primeira vez, você verá nosso banner de consentimento de cookies. Você pode aceitar ou recusar cookies não essenciais. Para alterar sua escolha, limpe o armazenamento local do navegador e acesse o site novamente.
+        </p>
+
+        <h3>Configurações do navegador</h3>
+        <p>
+          A maioria dos navegadores permite controlar cookies através de suas configurações. Consulte as instruções para seu navegador:
+        </p>
+        <ul>
+          <li>
+            <a href="https://support.google.com/chrome/answer/95647" target="_blank" rel="noopener noreferrer">
+              Google Chrome
+            </a>
+          </li>
+          <li>
+            <a href="https://support.mozilla.org/pt-BR/kb/ative-e-desative-os-cookies-que-os-sites-usam" target="_blank" rel="noopener noreferrer">
+              Mozilla Firefox
+            </a>
+          </li>
+          <li>
+            <a href="https://support.apple.com/pt-br/guide/safari/sfri11471/mac" target="_blank" rel="noopener noreferrer">
+              Apple Safari
+            </a>
+          </li>
+          <li>
+            <a href="https://support.microsoft.com/pt-br/microsoft-edge/excluir-cookies-no-microsoft-edge-63947406-40ac-c3b8-57b9-2a946a29ae09" target="_blank" rel="noopener noreferrer">
+              Microsoft Edge
+            </a>
+          </li>
+        </ul>
+
+        <p>
+          <strong>Atenção:</strong> desabilitar todos os cookies pode afetar a funcionalidade do site. Cookies essenciais (como preferência de tema) são armazenados via localStorage e precisam ser limpos manualmente nas configurações do navegador.
+        </p>
+
+        <h3>Opt-out do Google Analytics</h3>
+        <p>
+          Se você aceitar cookies analíticos mas depois quiser optar por não participar do Google Analytics, você pode instalar o <a href="https://tools.google.com/dlpage/gaoptout" target="_blank" rel="noopener noreferrer">complemento de opt-out do Google Analytics</a> para o navegador.
+        </p>
+
+        <h2>Cookies de terceiros</h2>
+        <p>
+          Podemos integrar serviços de terceiros que definem seus próprios cookies:
+        </p>
+        <ul>
+          <li><strong>Google Analytics:</strong> apenas se você consentir. Consulte a <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">Política de Privacidade do Google</a>.</li>
+          <li><strong>Formspree:</strong> processamento de formulários — pode usar cookies funcionais. Consulte a <a href="https://formspree.io/legal/privacy-policy" target="_blank" rel="noopener noreferrer">Política de Privacidade da Formspree</a>.</li>
+        </ul>
+
+        <h2>Atualizações desta Política</h2>
+        <p>
+          Esta Política de Cookies pode ser atualizada periodicamente para refletir mudanças em nossa prática ou na legislação aplicável. A data da última atualização está indicada no início deste documento.
+        </p>
+
+        <h2>Contato</h2>
+        <p>
+          Para dúvidas sobre cookies ou esta Política, entre em contato:
+          <a href="mailto:contato@projekt.com.br">contato@projekt.com.br</a>
+        </p>
+        <p>
+          Para informações sobre privacidade em geral, consulte nossa <a href="/privacidade">Política de Privacidade</a>.
+        </p>
+
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .cookie-type-block {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 1.75rem;
+    margin: 1.5rem 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.875rem;
+  }
+
+  .cookie-type-header {
+    display: flex;
+    align-items: center;
+    gap: 0.875rem;
+    flex-wrap: wrap;
+  }
+
+  .cookie-type-header h3 {
+    margin: 0;
+    font-size: 1.125rem;
+  }
+
+  .cookie-table-wrapper {
+    overflow-x: auto;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border);
+  }
+
+  .cookie-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.875rem;
+    color: var(--text-muted);
+  }
+
+  .cookie-table th {
+    text-align: left;
+    padding: 0.75rem 1rem;
+    background: var(--bg-alt);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .cookie-table td {
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+    line-height: 1.5;
+  }
+
+  .cookie-table tr:last-child td {
+    border-bottom: none;
+  }
+
+  .cookie-table code {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.8em;
+    background: var(--bg-alt);
+    padding: 0.15em 0.4em;
+    border-radius: 3px;
+  }
+</style>

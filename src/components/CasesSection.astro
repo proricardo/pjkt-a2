@@ -1,0 +1,290 @@
+---
+// Cases section — 3 highlighted cases with abstract SVG thumbnails
+const cases = [
+  {
+    id: 1,
+    category: 'Tecnologia',
+    title: 'Plataforma de Gestão para Indústria',
+    challenge: 'Sistemas legados fragmentados causavam retrabalho e perda de dados operacionais críticos.',
+    result: 'Integração completa via API moderna reduzindo tempo de operação em tempo de ciclo significativo.',
+    href: '/cases#case-1',
+    thumbGradient: 'from-violet to-blue',
+    thumbColor1: '#6D28D9',
+    thumbColor2: '#0284C7',
+  },
+  {
+    id: 2,
+    category: 'Inteligência Artificial',
+    title: 'Agente de IA para Suporte',
+    challenge: 'Volume crescente de tickets repetitivos sobrecarregava a equipe de suporte, prejudicando SLAs.',
+    result: 'LLM especializado e treinado no domínio da empresa resolve automaticamente a maioria das solicitações rotineiras.',
+    href: '/cases#case-2',
+    thumbColor1: '#0284C7',
+    thumbColor2: '#00E87A',
+  },
+  {
+    id: 3,
+    category: 'Cloud & Arquitetura',
+    title: 'Migração Cloud e Redesign de Arquitetura',
+    challenge: 'Infraestrutura monolítica limitava escalabilidade e causava downtime em picos de demanda.',
+    result: 'Migração para arquitetura cloud-native com zero downtime e capacidade de escalar horizontalmente.',
+    href: '/cases#case-3',
+    thumbColor1: '#8B5CF6',
+    thumbColor2: '#38BDF8',
+  },
+];
+---
+
+<section class="section cases-section" aria-labelledby="cases-title">
+  <div class="container" style="max-width:1280px;margin:0 auto;padding:0 1.5rem;">
+    <!-- Header -->
+    <div class="cases-header reveal">
+      <span class="section-label">Cases</span>
+      <h2 id="cases-title" class="section-title gradient-text">
+        Cases em destaque
+      </h2>
+      <p class="section-subtitle">
+        Exemplos do tipo de desafio que resolvemos e impacto que geramos para nossos clientes.
+      </p>
+    </div>
+
+    <!-- Cases grid -->
+    <div class="cases-grid">
+      {cases.map((c, i) => (
+        <article class={`case-card reveal reveal-delay-${i + 1}`} aria-labelledby={`case-title-${c.id}`}>
+          <!-- Thumbnail -->
+          <div class="case-thumb" aria-hidden="true">
+            <svg viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg" class="case-thumb-svg">
+              <defs>
+                <linearGradient id={`caseGrad${c.id}`} x1="0" y1="0" x2="400" y2="200" gradientUnits="userSpaceOnUse">
+                  <stop offset="0%" stop-color={c.thumbColor1} stop-opacity="0.8"/>
+                  <stop offset="100%" stop-color={c.thumbColor2} stop-opacity="0.8"/>
+                </linearGradient>
+                <filter id={`blur${c.id}`}>
+                  <feGaussianBlur stdDeviation="20"/>
+                </filter>
+              </defs>
+              <!-- Background -->
+              <rect width="400" height="200" fill="var(--bg-alt)"/>
+              <!-- Gradient blobs -->
+              <circle cx="80" cy="80" r="120" fill={`url(#caseGrad${c.id})`} filter={`url(#blur${c.id})`} opacity="0.5"/>
+              <circle cx="320" cy="150" r="100" fill={c.thumbColor2} filter={`url(#blur${c.id})`} opacity="0.3"/>
+              <!-- Grid lines -->
+              <path d="M0 50 H400 M0 100 H400 M0 150 H400 M100 0 V200 M200 0 V200 M300 0 V200" stroke="white" stroke-width="0.5" opacity="0.08"/>
+              <!-- Decorative shapes -->
+              {c.id === 1 && (
+                <>
+                  <rect x="140" y="70" width="120" height="60" rx="8" fill="none" stroke="white" stroke-width="1.5" opacity="0.5"/>
+                  <line x1="200" y1="70" x2="200" y2="130" stroke="white" stroke-width="1" opacity="0.3"/>
+                  <line x1="140" y1="100" x2="260" y2="100" stroke="white" stroke-width="1" opacity="0.3"/>
+                  <circle cx="200" cy="100" r="8" fill="white" opacity="0.7"/>
+                </>
+              )}
+              {c.id === 2 && (
+                <>
+                  <circle cx="200" cy="100" r="30" fill="none" stroke="white" stroke-width="1.5" opacity="0.5"/>
+                  <circle cx="200" cy="100" r="10" fill="white" opacity="0.7"/>
+                  <line x1="150" y1="70" x2="185" y2="90" stroke="white" stroke-width="1" opacity="0.4"/>
+                  <line x1="250" y1="70" x2="215" y2="90" stroke="white" stroke-width="1" opacity="0.4"/>
+                  <line x1="150" y1="130" x2="185" y2="110" stroke="white" stroke-width="1" opacity="0.4"/>
+                  <line x1="250" y1="130" x2="215" y2="110" stroke="white" stroke-width="1" opacity="0.4"/>
+                  <circle cx="150" cy="70" r="6" fill="white" opacity="0.5"/>
+                  <circle cx="250" cy="70" r="6" fill="white" opacity="0.5"/>
+                  <circle cx="150" cy="130" r="6" fill="white" opacity="0.5"/>
+                  <circle cx="250" cy="130" r="6" fill="white" opacity="0.5"/>
+                </>
+              )}
+              {c.id === 3 && (
+                <>
+                  <path d="M160 120 L200 60 L240 120 Z" fill="none" stroke="white" stroke-width="1.5" opacity="0.5"/>
+                  <path d="M170 120 L200 75 L230 120" fill="none" stroke="white" stroke-width="1" opacity="0.3"/>
+                  <circle cx="200" cy="60" r="6" fill="white" opacity="0.7"/>
+                  <circle cx="160" cy="120" r="5" fill="white" opacity="0.5"/>
+                  <circle cx="240" cy="120" r="5" fill="white" opacity="0.5"/>
+                  <line x1="160" y1="130" x2="240" y2="130" stroke="white" stroke-width="1" opacity="0.3"/>
+                </>
+              )}
+            </svg>
+          </div>
+
+          <!-- Content -->
+          <div class="case-content">
+            <span class="tag">{c.category}</span>
+            <h3 id={`case-title-${c.id}`} class="case-title">{c.title}</h3>
+
+            <div class="case-details">
+              <div class="case-detail">
+                <span class="case-detail-label">Desafio</span>
+                <p class="case-detail-text">{c.challenge}</p>
+              </div>
+              <div class="case-detail">
+                <span class="case-detail-label">Resultado</span>
+                <p class="case-detail-text">{c.result}</p>
+              </div>
+            </div>
+
+            <a href={c.href} class="case-link" aria-label={`Ver case: ${c.title}`}>
+              Ver case
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M5 12h14M12 5l7 7-7 7"/>
+              </svg>
+            </a>
+          </div>
+        </article>
+      ))}
+    </div>
+
+    <!-- Disclaimer -->
+    <p class="cases-disclaimer reveal">
+      * Casos são modelos ilustrativos até substituição pelo cliente [PREENCHER com cases reais].
+    </p>
+
+    <!-- CTA -->
+    <div class="cases-cta reveal">
+      <a href="/cases" class="btn-secondary">
+        Ver todos os cases →
+      </a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .cases-section {
+    background: var(--bg);
+  }
+
+  .cases-header {
+    max-width: 640px;
+    margin-bottom: 3.5rem;
+  }
+
+  .cases-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .case-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: transform 250ms ease, box-shadow 250ms ease, border-color 250ms ease;
+  }
+
+  .case-card:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--shadow-xl);
+    border-color: rgba(var(--accent-rgb), 0.3);
+  }
+
+  .case-thumb {
+    width: 100%;
+    aspect-ratio: 2/1;
+    overflow: hidden;
+  }
+
+  .case-thumb-svg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .case-content {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.875rem;
+    flex: 1;
+  }
+
+  .case-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: var(--text);
+    letter-spacing: -0.02em;
+    margin: 0;
+    line-height: 1.3;
+  }
+
+  .case-details {
+    display: flex;
+    flex-direction: column;
+    gap: 0.875rem;
+    flex: 1;
+  }
+
+  .case-detail {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .case-detail-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+
+  .case-detail-text {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    line-height: 1.55;
+    margin: 0;
+  }
+
+  .case-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--accent);
+    text-decoration: none;
+    -webkit-text-fill-color: var(--accent);
+    margin-top: auto;
+    padding-top: 0.5rem;
+    border-top: 1px solid var(--border);
+    transition: gap 200ms ease;
+  }
+
+  .case-link:hover {
+    gap: 0.6rem;
+    opacity: 1;
+    -webkit-text-fill-color: var(--accent);
+  }
+
+  .cases-disclaimer {
+    font-size: 0.8125rem;
+    color: var(--text-muted);
+    font-style: italic;
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+
+  .cases-cta {
+    display: flex;
+    justify-content: center;
+  }
+
+  @media (max-width: 900px) {
+    .cases-grid {
+      grid-template-columns: 1fr;
+      max-width: 500px;
+    }
+  }
+
+  @media (min-width: 640px) and (max-width: 900px) {
+    .cases-grid {
+      grid-template-columns: repeat(2, 1fr);
+      max-width: 100%;
+    }
+  }
+</style>

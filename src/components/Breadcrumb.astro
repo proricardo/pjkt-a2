@@ -1,0 +1,129 @@
+---
+export interface Props {
+  items: Array<{
+    label: string;
+    href: string;
+  }>;
+}
+
+const { items } = Astro.props;
+
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: items.map((item, index) => ({
+    '@type': 'ListItem',
+    position: index + 1,
+    name: item.label,
+    item: item.href.startsWith('http') ? item.href : `https://projekt.com.br${item.href}`,
+  })),
+};
+---
+
+<nav aria-label="Breadcrumb" class="breadcrumb-nav">
+  <ol
+    class="breadcrumb-list"
+    role="list"
+    itemscope
+    itemtype="https://schema.org/BreadcrumbList"
+  >
+    {items.map((item, index) => (
+      <li
+        class="breadcrumb-item"
+        itemprop="itemListElement"
+        itemscope
+        itemtype="https://schema.org/ListItem"
+      >
+        {index < items.length - 1 ? (
+          <>
+            <a
+              href={item.href}
+              class="breadcrumb-link"
+              itemprop="item"
+            >
+              <span itemprop="name">{item.label}</span>
+            </a>
+            <meta itemprop="position" content={String(index + 1)} />
+            <svg
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+              class="breadcrumb-sep"
+            >
+              <polyline points="9 18 15 12 9 6" />
+            </svg>
+          </>
+        ) : (
+          <>
+            <span class="breadcrumb-current" aria-current="page" itemprop="name">
+              {item.label}
+            </span>
+            <meta itemprop="position" content={String(index + 1)} />
+          </>
+        )}
+      </li>
+    ))}
+  </ol>
+</nav>
+
+<!-- Schema.org BreadcrumbList JSON-LD -->
+<script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+
+<style>
+  .breadcrumb-nav {
+    display: inline-flex;
+  }
+
+  .breadcrumb-list {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.25rem;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .breadcrumb-item {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+  }
+
+  .breadcrumb-link {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.8125rem;
+    color: var(--text-muted);
+    text-decoration: none;
+    -webkit-text-fill-color: var(--text-muted);
+    transition: color 150ms ease;
+    padding: 0.2rem 0.3rem;
+    border-radius: 4px;
+  }
+
+  .breadcrumb-link:hover {
+    color: var(--accent);
+    -webkit-text-fill-color: var(--accent);
+    background: rgba(var(--accent-rgb), 0.06);
+    opacity: 1;
+  }
+
+  .breadcrumb-sep {
+    color: var(--text-muted);
+    opacity: 0.5;
+    flex-shrink: 0;
+  }
+
+  .breadcrumb-current {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.8125rem;
+    color: var(--text);
+    font-weight: 500;
+  }
+</style>

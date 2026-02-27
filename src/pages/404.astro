@@ -1,0 +1,200 @@
+---
+import Layout from '@/layouts/Layout.astro';
+---
+
+<Layout
+  title="Página não encontrada"
+  description="A página que você procura não foi encontrada. Volte para a página inicial da Projekt."
+  noIndex={true}
+>
+  <section class="not-found-section" aria-labelledby="not-found-title">
+    <!-- Decorative background -->
+    <div class="not-found-bg" aria-hidden="true">
+      <div class="orb orb-violet" style="width:400px;height:400px;top:-100px;left:-100px;opacity:0.2;"></div>
+      <div class="orb orb-blue" style="width:350px;height:350px;bottom:-100px;right:-50px;opacity:0.15;"></div>
+      <div class="bg-grid-dots" style="position:absolute;inset:0;opacity:0.3;"></div>
+    </div>
+
+    <div class="container" style="max-width:1280px;margin:0 auto;padding:0 1.5rem;position:relative;z-index:1;">
+      <div class="not-found-content">
+        <!-- 404 visual -->
+        <div class="not-found-code" aria-hidden="true">
+          <span class="code-404">404</span>
+          <div class="code-decoration">
+            <span class="mono" style="font-size:0.8rem;color:var(--text-muted);">// page_not_found</span>
+          </div>
+        </div>
+
+        <!-- Content -->
+        <div class="not-found-text">
+          <h1 id="not-found-title" class="not-found-title">
+            Página não encontrada
+          </h1>
+          <p class="not-found-subtitle">
+            A página que você procura não existe, foi movida ou o endereço está incorreto.
+          </p>
+
+          <!-- Navigation options -->
+          <div class="not-found-actions">
+            <a href="/" class="btn-primary" style="padding:0.875rem 2rem;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+              </svg>
+              Ir para o Início
+            </a>
+            <a href="/contato" class="btn-secondary" style="padding:0.875rem 2rem;">
+              Fale conosco
+            </a>
+          </div>
+
+          <!-- Quick links -->
+          <div class="not-found-links">
+            <p class="links-label">Ou navegue por:</p>
+            <nav aria-label="Links de navegação rápida">
+              <ul class="quick-links" role="list">
+                <li><a href="/servicos">Serviços</a></li>
+                <li><a href="/cases">Cases</a></li>
+                <li><a href="/metodologia">Metodologia</a></li>
+                <li><a href="/sobre">Sobre</a></li>
+                <li><a href="/insights">Insights</a></li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .not-found-section {
+    min-height: calc(100vh - var(--header-height) - 200px);
+    display: flex;
+    align-items: center;
+    background: var(--bg);
+    position: relative;
+    overflow: hidden;
+    padding: 5rem 0;
+  }
+
+  .not-found-bg {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  .not-found-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 3rem;
+  }
+
+  .not-found-code {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .code-404 {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: clamp(6rem, 20vw, 12rem);
+    line-height: 1;
+    letter-spacing: -0.05em;
+    background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+    opacity: 0.8;
+  }
+
+  .code-decoration {
+    padding: 0.3rem 0.875rem;
+    background: rgba(var(--accent-rgb), 0.08);
+    border: 1px solid rgba(var(--accent-rgb), 0.2);
+    border-radius: 999px;
+  }
+
+  .not-found-text {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    max-width: 560px;
+  }
+
+  .not-found-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
+    color: var(--text);
+    letter-spacing: -0.03em;
+    margin: 0;
+  }
+
+  .not-found-subtitle {
+    font-size: 1.0625rem;
+    color: var(--text-muted);
+    line-height: 1.65;
+    margin: 0;
+  }
+
+  .not-found-actions {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .not-found-links {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.875rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border);
+    width: 100%;
+  }
+
+  .links-label {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    margin: 0;
+  }
+
+  .quick-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    justify-content: center;
+  }
+
+  .quick-links a {
+    display: inline-flex;
+    padding: 0.4rem 0.875rem;
+    background: var(--bg-alt);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    text-decoration: none;
+    -webkit-text-fill-color: var(--text-muted);
+    transition: all 150ms ease;
+  }
+
+  .quick-links a:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: rgba(var(--accent-rgb), 0.06);
+    -webkit-text-fill-color: var(--accent);
+    opacity: 1;
+  }
+</style>

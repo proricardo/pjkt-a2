@@ -1,0 +1,112 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <defs>
+    <linearGradient id="bgGrad" x1="0" y1="0" x2="1200" y2="630" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#09090B"/>
+      <stop offset="100%" stop-color="#111113"/>
+    </linearGradient>
+    <linearGradient id="accentGrad" x1="0" y1="0" x2="600" y2="400" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#8B5CF6"/>
+      <stop offset="100%" stop-color="#38BDF8"/>
+    </linearGradient>
+    <linearGradient id="orbGrad1" x1="0" y1="0" x2="600" y2="600" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#6D28D9" stop-opacity="0.6"/>
+      <stop offset="100%" stop-color="#6D28D9" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="orbGrad2" x1="600" y1="0" x2="1200" y2="630" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#0284C7" stop-opacity="0.4"/>
+      <stop offset="100%" stop-color="#0284C7" stop-opacity="0"/>
+    </linearGradient>
+    <filter id="blur1">
+      <feGaussianBlur stdDeviation="80"/>
+    </filter>
+    <filter id="blur2">
+      <feGaussianBlur stdDeviation="60"/>
+    </filter>
+    <clipPath id="clip">
+      <rect width="1200" height="630"/>
+    </clipPath>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bgGrad)"/>
+
+  <!-- Decorative orbs -->
+  <g clip-path="url(#clip)">
+    <circle cx="150" cy="180" r="350" fill="url(#orbGrad1)" filter="url(#blur1)"/>
+    <circle cx="1050" cy="450" r="300" fill="url(#orbGrad2)" filter="url(#blur2)"/>
+
+    <!-- Grid pattern -->
+    <g stroke="#27272A" stroke-width="0.5" opacity="0.5">
+      <line x1="0" y1="90" x2="1200" y2="90"/>
+      <line x1="0" y1="180" x2="1200" y2="180"/>
+      <line x1="0" y1="270" x2="1200" y2="270"/>
+      <line x1="0" y1="360" x2="1200" y2="360"/>
+      <line x1="0" y1="450" x2="1200" y2="450"/>
+      <line x1="0" y1="540" x2="1200" y2="540"/>
+      <line x1="150" y1="0" x2="150" y2="630"/>
+      <line x1="300" y1="0" x2="300" y2="630"/>
+      <line x1="450" y1="0" x2="450" y2="630"/>
+      <line x1="600" y1="0" x2="600" y2="630"/>
+      <line x1="750" y1="0" x2="750" y2="630"/>
+      <line x1="900" y1="0" x2="900" y2="630"/>
+      <line x1="1050" y1="0" x2="1050" y2="630"/>
+    </g>
+  </g>
+
+  <!-- Logo mark -->
+  <defs>
+    <linearGradient id="markGrad" x1="80" y1="80" x2="140" y2="140" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#8B5CF6"/>
+      <stop offset="100%" stop-color="#38BDF8"/>
+    </linearGradient>
+  </defs>
+  <rect x="80" y="80" width="72" height="72" rx="16" fill="url(#markGrad)"/>
+  <path
+    d="M100 95h18c6 0 11 5 11 11s-5 11-11 11h-9v15h-9V95z
+       M109 112h8.5c2.5 0 4-1.8 4-5.5S120 101 117.5 101H109v11z"
+    fill="white"
+  />
+
+  <!-- "Projekt" main text -->
+  <text
+    x="80"
+    y="285"
+    font-family="'Syne', 'Arial Black', Impact, sans-serif"
+    font-weight="900"
+    font-size="120"
+    letter-spacing="-4"
+    fill="url(#accentGrad)"
+  >Projekt</text>
+
+  <!-- Tagline -->
+  <text
+    x="82"
+    y="340"
+    font-family="'Inter', 'Helvetica Neue', Arial, sans-serif"
+    font-weight="400"
+    font-size="28"
+    fill="#A1A1AA"
+    letter-spacing="1"
+  >Tecnologia &amp; IA para o futuro</text>
+
+  <!-- Decorative line -->
+  <rect x="80" y="370" width="200" height="2" rx="1" fill="url(#accentGrad)" opacity="0.6"/>
+
+  <!-- Bottom info -->
+  <text
+    x="80"
+    y="560"
+    font-family="'JetBrains Mono', 'Courier New', monospace"
+    font-size="18"
+    fill="#52525B"
+    letter-spacing="2"
+  >// projekt.com.br</text>
+
+  <!-- Right decorative element -->
+  <g opacity="0.15">
+    <circle cx="1050" cy="315" r="120" fill="none" stroke="#8B5CF6" stroke-width="1.5" stroke-dasharray="8 4"/>
+    <circle cx="1050" cy="315" r="80" fill="none" stroke="#38BDF8" stroke-width="1" stroke-dasharray="6 3"/>
+    <circle cx="1050" cy="315" r="40" fill="none" stroke="#00FF87" stroke-width="0.5"/>
+    <circle cx="1050" cy="315" r="8" fill="#8B5CF6" opacity="0.6"/>
+  </g>
+</svg>

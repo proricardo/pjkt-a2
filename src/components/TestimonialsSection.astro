@@ -1,0 +1,306 @@
+---
+// Testimonials — CSS scroll-snap carousel, no external library
+const testimonials = [
+  {
+    quote: 'A Projekt transformou nossa visão em produto em tempo recorde. A metodologia clara e o time altamente técnico fizeram toda a diferença na previsibilidade do projeto.',
+    name: '[PREENCHER: Nome do Cliente]',
+    role: '[PREENCHER: Cargo]',
+    company: '[PREENCHER: Empresa]',
+  },
+  {
+    quote: 'Nunca tínhamos trabalhado com uma consultoria que entendesse tão bem o contexto de negócio antes de propor soluções tecnológicas. O resultado superou as expectativas.',
+    name: '[PREENCHER: Nome do Cliente]',
+    role: '[PREENCHER: Cargo]',
+    company: '[PREENCHER: Empresa]',
+  },
+  {
+    quote: 'A integração de IA que a Projekt implementou reduziu drasticamente nosso tempo de resposta ao cliente. A abordagem pragmática e focada em resultado é diferenciada.',
+    name: '[PREENCHER: Nome do Cliente]',
+    role: '[PREENCHER: Cargo]',
+    company: '[PREENCHER: Empresa]',
+  },
+];
+---
+
+<section class="section testimonials-section" aria-labelledby="testimonials-title">
+  <div class="container" style="max-width:1280px;margin:0 auto;padding:0 1.5rem;">
+    <!-- Header -->
+    <div class="testimonials-header reveal">
+      <span class="section-label">Depoimentos</span>
+      <h2 id="testimonials-title" class="section-title">
+        O que dizem nossos <span class="gradient-text">clientes</span>
+      </h2>
+      <p class="testimonials-note">
+        Depoimentos são modelos de estrutura. [PREENCHER com feedbacks reais dos clientes]
+      </p>
+    </div>
+
+    <!-- Carousel wrapper -->
+    <div class="carousel-outer" aria-roledescription="carrossel" aria-label="Depoimentos de clientes">
+      <div
+        class="carousel-track"
+        id="testimonials-track"
+        role="list"
+      >
+        {testimonials.map((t, i) => (
+          <div
+            class="testimonial-card"
+            role="listitem"
+            aria-label={`Depoimento ${i + 1} de ${testimonials.length}`}
+          >
+            <!-- Stars -->
+            <div class="stars" aria-label="5 estrelas de avaliação">
+              {[1,2,3,4,5].map(() => (
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" class="star">
+                  <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                </svg>
+              ))}
+            </div>
+
+            <!-- Quote -->
+            <blockquote class="testimonial-quote">
+              <p>"{t.quote}"</p>
+            </blockquote>
+
+            <!-- Author -->
+            <div class="testimonial-author">
+              <div class="author-avatar" aria-hidden="true">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                  <circle cx="12" cy="7" r="4"/>
+                </svg>
+              </div>
+              <div class="author-info">
+                <span class="author-name">{t.name}</span>
+                <span class="author-role">{t.role} — {t.company}</span>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <!-- Nav dots -->
+    <div class="carousel-dots" role="tablist" aria-label="Navegação do carrossel">
+      {testimonials.map((_, i) => (
+        <button
+          class={`carousel-dot ${i === 0 ? 'active' : ''}`}
+          data-index={i}
+          aria-label={`Ir para depoimento ${i + 1}`}
+          role="tab"
+          aria-selected={i === 0}
+          type="button"
+        ></button>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .testimonials-section {
+    background: var(--bg-alt);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    overflow: hidden;
+  }
+
+  .testimonials-header {
+    max-width: 640px;
+    margin-bottom: 3rem;
+  }
+
+  .testimonials-note {
+    font-size: 0.8125rem;
+    color: var(--text-muted);
+    font-style: italic;
+    margin-top: 0.5rem;
+  }
+
+  /* Carousel */
+  .carousel-outer {
+    overflow: hidden;
+    margin: 0 -1.5rem;
+    padding: 0 1.5rem;
+  }
+
+  .carousel-track {
+    display: flex;
+    gap: 1.5rem;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 1rem;
+    cursor: grab;
+  }
+
+  .carousel-track:active {
+    cursor: grabbing;
+  }
+
+  /* Hide scrollbar */
+  .carousel-track::-webkit-scrollbar { display: none; }
+  .carousel-track { -ms-overflow-style: none; scrollbar-width: none; }
+
+  .testimonial-card {
+    flex: 0 0 calc(33.333% - 1rem);
+    min-width: 320px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-xl);
+    padding: 2rem;
+    scroll-snap-align: start;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    transition: border-color 250ms ease;
+  }
+
+  .testimonial-card:hover {
+    border-color: rgba(var(--accent-rgb), 0.3);
+  }
+
+  /* Stars */
+  .stars {
+    display: flex;
+    gap: 0.25rem;
+    color: #F59E0B;
+  }
+
+  .star {
+    flex-shrink: 0;
+  }
+
+  /* Quote */
+  .testimonial-quote {
+    flex: 1;
+    border: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .testimonial-quote p {
+    font-size: 0.9375rem;
+    color: var(--text);
+    line-height: 1.75;
+    font-style: italic;
+    margin: 0;
+  }
+
+  /* Author */
+  .testimonial-author {
+    display: flex;
+    align-items: center;
+    gap: 0.875rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .author-avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    flex-shrink: 0;
+  }
+
+  .author-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.125rem;
+  }
+
+  .author-name {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--text);
+  }
+
+  .author-role {
+    font-size: 0.8125rem;
+    color: var(--text-muted);
+  }
+
+  /* Dots */
+  .carousel-dots {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 2rem;
+  }
+
+  .carousel-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--border);
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    transition: all 200ms ease;
+  }
+
+  .carousel-dot.active,
+  .carousel-dot[aria-selected="true"] {
+    background: var(--accent);
+    width: 24px;
+    border-radius: 4px;
+  }
+
+  @media (max-width: 900px) {
+    .testimonial-card {
+      flex: 0 0 85%;
+      min-width: unset;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .testimonial-card {
+      flex: 0 0 90%;
+    }
+  }
+</style>
+
+<script is:inline>
+  (function() {
+    var track = document.getElementById('testimonials-track');
+    var dots = document.querySelectorAll('.carousel-dot');
+    if (!track || !dots.length) return;
+
+    function updateDots(index) {
+      dots.forEach(function(dot, i) {
+        dot.classList.toggle('active', i === index);
+        dot.setAttribute('aria-selected', i === index ? 'true' : 'false');
+      });
+    }
+
+    // Dot click
+    dots.forEach(function(dot, i) {
+      dot.addEventListener('click', function() {
+        var cards = track.querySelectorAll('.testimonial-card');
+        if (cards[i]) {
+          track.scrollTo({ left: cards[i].offsetLeft - track.offsetLeft, behavior: 'smooth' });
+          updateDots(i);
+        }
+      });
+    });
+
+    // Scroll to update dots
+    track.addEventListener('scroll', function() {
+      var cards = track.querySelectorAll('.testimonial-card');
+      var scrollLeft = track.scrollLeft;
+      var activeIndex = 0;
+      cards.forEach(function(card, i) {
+        if (card.offsetLeft - track.offsetLeft <= scrollLeft + 10) {
+          activeIndex = i;
+        }
+      });
+      updateDots(activeIndex);
+    }, { passive: true });
+  })();
+</script>
