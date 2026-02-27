@@ -14,7 +14,8 @@ export default defineConfig({
     sitemap(),
   ],
   build: {
-    assets: '_assets',
+    // 'assets' sem underscore — Jekyll do GitHub Pages ignora pastas com '_'
+    assets: 'assets',
   },
   vite: {
     resolve: {
