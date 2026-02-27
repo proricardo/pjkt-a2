@@ -6,18 +6,21 @@ import path from 'node:path';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
+// Quando o domínio customizado (projekt.com.br) estiver configurado no DNS,
+// remova a variável BASE_PATH e defina base como ''.
+// Enquanto o site estiver em proricardo.github.io/pjkt-a2, base = '/pjkt-a2'.
+const base = process.env.BASE_PATH ?? '/pjkt-a2';
+
 export default defineConfig({
-  site: 'https://projekt.com.br',
+  site: 'https://proricardo.github.io',
+  base,
   output: 'static',
-  // Saída em /docs para ser versionada no repositório.
-  // GitHub Pages suporta servir a partir de /docs na branch main.
   outDir: 'docs',
   integrations: [
     tailwind({ applyBaseStyles: false }),
     sitemap(),
   ],
   build: {
-    // Sem underscore — Jekyll ignora pastas com '_'
     assets: 'assets',
   },
   vite: {
