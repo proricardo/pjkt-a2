@@ -10,11 +10,13 @@ permissions:
 
 jobs:
   build-and-deploy:
-    name: Build e deploy para gh-pages
+    name: Build e commita arquivos estáticos na raiz
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout código-fonte (main)
+      - name: Checkout
         uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Setup Node.js 20
         uses: actions/setup-node@v4
@@ -30,13 +32,16 @@ jobs:
         env:
           PUBLIC_FORMSPREE_ENDPOINT: ${{ secrets.FORMSPREE_ENDPOINT }}
 
-      - name: Deploy /docs → branch gh-pages (raiz)
-        uses: peaceiris/actions-gh-pages@v4
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./docs
-          publish_branch: gh-pages
-          force_orphan: false
-          user_name: "github-actions[bot]"
-          user_email: "github-actions[bot]@users.noreply.github.com"
-          commit_message: "chore: build automático [skip ci]"
+      - name: Copiar build para raiz do repositório
+        run: cp -r docs/. .
+
+      - name: Commitar index.html e demais arquivos na raiz
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add index.html 404.html favicon.svg robots.txt CNAME .nojekyll \
+                  sitemap-index.xml sitemap-0.xml \
+                  assets/ cases/ contato/ cookies/ images/ \
+                  insights/ metodologia/ privacidade/ servicos/ sobre/ || true
+          git diff --staged --quiet || git commit -m "chore: build automático [skip ci]"
+          git push
