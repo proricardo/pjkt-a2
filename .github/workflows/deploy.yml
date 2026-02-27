@@ -1,4 +1,4 @@
-name: Deploy to GitHub Pages
+name: Build e Deploy — GitHub Pages
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write   # para commitar docs/ atualizado
   pages: write
   id-token: write
 
@@ -15,40 +15,50 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  build:
-    name: Build site
+  build-and-deploy:
+    name: Build, commita docs/ e faz deploy
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
+      - name: Checkout
         uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Setup Node.js
+      - name: Setup Node.js 20
         uses: actions/setup-node@v4
         with:
           node-version: "20"
           cache: "npm"
 
-      - name: Install dependencies
+      - name: Instalar dependências
         run: npm ci
 
-      - name: Build Astro site
+      - name: Build (gera /docs com index.html)
         run: npm run build
         env:
           PUBLIC_FORMSPREE_ENDPOINT: ${{ secrets.FORMSPREE_ENDPOINT }}
 
-      - name: Upload Pages artifact
+      - name: Commitar /docs atualizado
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add docs/
+          git diff --staged --quiet || git commit -m "chore: build automático [skip ci]"
+          git push
+
+      - name: Upload artifact para Pages
         uses: actions/upload-pages-artifact@v3
         with:
-          path: dist
+          path: docs
 
   deploy:
-    name: Deploy to GitHub Pages
-    needs: build
+    name: Deploy para GitHub Pages
+    needs: build-and-deploy
     runs-on: ubuntu-latest
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - name: Deploy to GitHub Pages
+      - name: Deploy
         id: deployment
         uses: actions/deploy-pages@v4

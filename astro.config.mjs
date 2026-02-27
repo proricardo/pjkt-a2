@@ -9,12 +9,15 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 export default defineConfig({
   site: 'https://projekt.com.br',
   output: 'static',
+  // Saída em /docs para ser versionada no repositório.
+  // GitHub Pages suporta servir a partir de /docs na branch main.
+  outDir: 'docs',
   integrations: [
     tailwind({ applyBaseStyles: false }),
     sitemap(),
   ],
   build: {
-    // 'assets' sem underscore — Jekyll do GitHub Pages ignora pastas com '_'
+    // Sem underscore — Jekyll ignora pastas com '_'
     assets: 'assets',
   },
   vite: {

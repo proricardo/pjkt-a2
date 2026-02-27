@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <filter id="noise">
+      <feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/>
+      <feColorMatrix type="saturate" values="0"/>
+      <feBlend in="SourceGraphic" mode="overlay" result="noisy"/>
+      <feComposite in="noisy" in2="SourceGraphic" operator="in"/>
+    </filter>
+    <filter id="orbBlur">
+      <feGaussianBlur stdDeviation="80"/>
+    </filter>
+    <filter id="orbBlur2">
+      <feGaussianBlur stdDeviation="60"/>
+    </filter>
+    <filter id="orbBlur3">
+      <feGaussianBlur stdDeviation="50"/>
+    </filter>
+    <radialGradient id="orb1" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#6D28D9" stop-opacity="0.7"/>
+      <stop offset="100%" stop-color="#6D28D9" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="orb2" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#0284C7" stop-opacity="0.5"/>
+      <stop offset="100%" stop-color="#0284C7" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="orb3" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#00E87A" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#00E87A" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Orb 1 — violet, top left -->
+  <ellipse cx="-100" cy="-50" rx="700" ry="700" fill="url(#orb1)" filter="url(#orbBlur)"/>
+
+  <!-- Orb 2 — blue, top right -->
+  <ellipse cx="1400" cy="200" rx="600" ry="600" fill="url(#orb2)" filter="url(#orbBlur2)"/>
+
+  <!-- Orb 3 — neon green, bottom center -->
+  <ellipse cx="720" cy="900" rx="400" ry="400" fill="url(#orb3)" filter="url(#orbBlur3)"/>
+
+  <!-- Subtle grid dots pattern -->
+  <pattern id="dots" x="0" y="0" width="32" height="32" patternUnits="userSpaceOnUse">
+    <circle cx="1" cy="1" r="1" fill="#E8E3DC" opacity="0.4"/>
+  </pattern>
+  <rect width="1440" height="900" fill="url(#dots)"/>
+
+  <!-- Thin accent lines -->
+  <line x1="0" y1="280" x2="1440" y2="280" stroke="rgba(109,40,217,0.08)" stroke-width="1"/>
+  <line x1="0" y1="580" x2="1440" y2="580" stroke="rgba(2,132,199,0.06)" stroke-width="1"/>
+  <line x1="360" y1="0" x2="360" y2="900" stroke="rgba(109,40,217,0.05)" stroke-width="1"/>
+  <line x1="900" y1="0" x2="900" y2="900" stroke="rgba(2,132,199,0.05)" stroke-width="1"/>
+</svg>
