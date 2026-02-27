@@ -1,0 +1,5 @@
+<svg width="48" height="48" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" fill="none" aria-hidden="true">
+  <rect width="48" height="48" rx="12" fill="rgba(109,40,217,0.08)"/>
+  <!-- Puzzle pieces -->
+  <path d="M13 13h8v4a3 3 0 0 0 6 0v-4h8v8h-4a3 3 0 0 0 0 6h4v8H27v-4a3 3 0 0 0-6 0v4H13v-8h4a3 3 0 0 0 0-6h-4V13z" stroke="#6D28D9" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="rgba(109,40,217,0.06)"/>
+</svg>
